@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 // import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import { defineComponent, SetupContext, onMounted } from '@vue/composition-api';
 
@@ -19,7 +18,7 @@ export default defineComponent({
   setup(props: Props, ctx: SetupContext) {
 
     onMounted(()=> {
-      console.log(ctx.root.$route);
+      console.log(ctx.root);
     });
   }
 });
