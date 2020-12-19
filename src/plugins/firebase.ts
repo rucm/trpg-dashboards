@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import Vue from 'vue';
 
 const config = {
   apiKey: process.env.VUE_APP_API_KEY,
@@ -17,5 +18,14 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 
-export const auth = firebase.app().auth();
-export const firestore = firebase.app().firestore();
+const auth = firebase.app().auth();
+const firestore = firebase.app().firestore();
+
+const plugin = {
+  install(Vue: any) {
+    Vue.prototype.$firestore = firestore;
+    Vue.prototype.$auth = auth;
+  }
+};
+
+Vue.use(plugin);
