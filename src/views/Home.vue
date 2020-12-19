@@ -1,9 +1,11 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <router-link to="/about">about</router-link>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
-  </div>
+  <v-container fluid>
+    <v-row class="mb-4">
+      <v-col md="6" offset-md="3" sm="8" offset-sm="2">
+        <v-card class="pa-2" tile>test</v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
