@@ -2,11 +2,11 @@ import { InjectionKey } from '@vue/composition-api';
 import { useStatusBoardState } from './state';
 import { useEmptyCardTemplate } from './template';
 
-export const useStatusBoardModule = () => {
+export const useStatusBoardModule = (template: string) => {
 
   const state = useStatusBoardState();
 
-  const emptyCardTemplate = useEmptyCardTemplate('sw');
+  const emptyCardTemplate = useEmptyCardTemplate(template);
 
   return {
     state,

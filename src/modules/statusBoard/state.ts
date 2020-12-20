@@ -1,7 +1,7 @@
 import { reactive } from '@vue/composition-api';
 import { State } from '@/types/statusBoardType';
 
-export function useStatusBoardState () {
+export const useStatusBoardState = () => {
 
   const state = reactive<State>({
     id: '',

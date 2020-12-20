@@ -1,6 +1,6 @@
 import { Card, CardItem } from '@/types/statusBoardType';
 
-export function useEmptyCardTemplate (template: string) {
+export const useEmptyCardTemplate = (template: string) => {
 
   function createEmptyCardItem (): Array<CardItem> {
     if (template === 'sw') {
