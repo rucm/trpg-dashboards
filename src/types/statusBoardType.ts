@@ -1,17 +1,22 @@
 
-export interface CardItem {
+export type CardItem = {
   label: string,
-  value: number
+  current: number,
+  max: number
 };
 
-export interface Card {
-  label: string,
-  parts: Array<CardItem>
+export type Card = {
+  name: string,
+  items: Array<CardItem>
 };
 
-export interface State {
-  id: number,
-  cards: Array<Card>,
-  createdAt: Date,
-  updatedAt: Date
+export type CardGroup = {
+  name: string,
+  cards: Array<Card>
+};
+
+export type State = {
+  id: string,
+  groups: Array<CardGroup>,
+  template: string
 };
