@@ -1,5 +1,5 @@
 import { InjectionKey } from '@vue/composition-api';
-import useStatusBoardState from './state';
+import { useStatusBoardState } from './state';
 import { useEmptyCardTemplate } from './template';
 
 export const useStatusBoardModule = () => {
