@@ -1,26 +1,25 @@
 <template>
-  <v-container fluid>
-    <v-row class="mb-4">
-      <v-col md="6" offset-md="3" sm="8" offset-sm="2">
-        <v-card class="pa-2" tile>test</v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <home-container>
+    <home-header title="ツール一覧" content="TRPG補助系ツールの一覧です。"></home-header>
+    <home-app-card title="test" content="これはてすとです" link="/test"></home-app-card>
+  </home-container>
 </template>
 
 <script lang="ts">
-// import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import { defineComponent, SetupContext, onMounted } from '@vue/composition-api';
-
-type Props = {
-};
+import HomeContainer from '@/components/home/HomeContainer.vue';
+import HomeHeader from '@/components/home/HomeHeader.vue';
+import HomeAppCard from '@/components/home/HomeAppCard.vue';
 
 export default defineComponent({
   name: 'Home',
-  setup(props: Props, ctx: SetupContext) {
+
+  components: { HomeContainer, HomeHeader, HomeAppCard },
+
+  setup(props: {}, ctx: SetupContext) {
 
     onMounted(()=> {
-      console.log(ctx.root);
+      console.log(ctx);
     });
   }
 });
