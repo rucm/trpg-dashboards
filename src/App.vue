@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    
+
     <v-app-bar app color="primary" dark dense>
       <v-toolbar-title @click="onPushRouteHome">TRPG Dashboards</v-toolbar-title>
     </v-app-bar>
