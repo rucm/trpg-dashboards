@@ -1,8 +1,8 @@
-import { Card, CardItem } from '@/types/statusBoardType';
+import { Card, CardGroup, CardItem } from '@/types/statusBoardType';
 
 export const useEmptyCardTemplate = (template: string) => {
 
-  function createEmptyCardItem (): Array<CardItem> {
+  function createEmptyCardItems (): Array<CardItem> {
     if (template === 'sw') {
       return [ { label: 'HP', current: 0, max: 0 }, { label: 'MP', current: 0, max: 0 } ];
     }
@@ -11,14 +11,16 @@ export const useEmptyCardTemplate = (template: string) => {
   }
 
   function createEmptyCard (): Card {
-    return {
-      name: '',
-      items: createEmptyCardItem()
-    };
+    return { name: '', items: createEmptyCardItems() };
   };
 
+  function createEmptyCardGroup () : CardGroup {
+    return { name: '', cards: [createEmptyCard()] };
+  }
+
   return {
-    createEmptyCardItem,
-    createEmptyCard
+    createEmptyCardItems,
+    createEmptyCard,
+    createEmptyCardGroup
   }
 };
