@@ -1,7 +1,7 @@
 <template>
   <home-container>
     <home-header title="ツール一覧" content="TRPG補助系ツールの一覧です。"></home-header>
-    <home-app-card title="test" content="これはてすとです" link="/test"></home-app-card>
+    <home-app-card title="test" content="これはてすとです" link="/?test=1"></home-app-card>
   </home-container>
 </template>
 
