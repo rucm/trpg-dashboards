@@ -7,8 +7,10 @@ export const useStatusBoardFormActions = (state: FormState) => {
   const template = useEmptyCardTemplate();
 
   async function isExistRoomId () {
+    console.log(state.roomId);
     const itemRef = await firestore.collection('rooms').doc(state.roomId);
     const doc = await itemRef.get();
+    console.log(doc.exists);
     return doc.exists;
   }
 

@@ -12,9 +12,9 @@ export const useEmptyCardTemplate = () => {
 
   function createEmptyCard (template: string): Card {
     return { name: '', items: createEmptyCardItems(template) };
-  };
+  }
 
-  function createEmptyCardGroup (template: string) : CardGroup {
+  function createEmptyCardGroup (template: string): CardGroup {
     return { name: '', cards: [createEmptyCard(template)] };
   }
 

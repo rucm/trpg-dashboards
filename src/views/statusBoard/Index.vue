@@ -4,12 +4,18 @@
   </status-board-container>
 </template>
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent, provide } from '@vue/composition-api';
 import StatusBoardContainer from '@/components/statusBoard/common/StatusBoardContainer.vue';
 import StatusBoardForm from '@/components/statusBoard/form/StatusBoardForm.vue';
+import { useStatusBoardFormModule, StatusBoardFormModuleKey } from '@/modules/statusBoard/form';
+
 
 export default defineComponent({
 
-  components: { StatusBoardContainer, StatusBoardForm }
+  components: { StatusBoardContainer, StatusBoardForm },
+
+  setup () {
+    provide(StatusBoardFormModuleKey, useStatusBoardFormModule());
+  }
 });
 </script>
