@@ -1,6 +1,6 @@
 <template>
   <home-wrap-box>
-    <v-card outlined rounded link :to="link">
+    <v-card rounded link :to="link">
       <v-card-title>{{ title }}</v-card-title>
       <v-card-text>{{ content }}</v-card-text>
     </v-card>
