@@ -5,8 +5,8 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api';
-import StatusBoardContainer from '@/components/statusBoard/StatusBoardContainer.vue';
-import StatusBoardForm from '@/components/statusBoard/StatusBoardForm.vue';
+import StatusBoardContainer from '@/components/statusBoard/common/StatusBoardContainer.vue';
+import StatusBoardForm from '@/components/statusBoard/form/StatusBoardForm.vue';
 
 export default defineComponent({
 

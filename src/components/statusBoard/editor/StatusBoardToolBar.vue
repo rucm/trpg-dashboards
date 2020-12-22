@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api';
-import StatusBoardWrapBox from './StatusBoardWrapBox.vue';
+import StatusBoardWrapBox from '@/components/statusBoard/common/StatusBoardWrapBox.vue';
 
 export default defineComponent({
 
