@@ -1,12 +1,12 @@
 import { InjectionKey } from '@vue/composition-api';
 import { useStatusBoardState } from './state';
-import { useEmptyCardTemplate } from './template';
+import { useEmptyCardTemplate } from '../template';
 
-export const useStatusBoardModule = (template: string) => {
+export const useStatusBoardModule = () => {
 
   const state = useStatusBoardState();
 
-  const emptyCardTemplate = useEmptyCardTemplate(template);
+  const emptyCardTemplate = useEmptyCardTemplate();
 
   return {
     state,
@@ -15,4 +15,4 @@ export const useStatusBoardModule = (template: string) => {
 };
 
 export type StatusBoardModule = ReturnType<typeof useStatusBoardModule>;
-export const StatusBoardKey: InjectionKey<StatusBoardModule> = Symbol('StatusBoardModule');
+export const StatusBoardModuleKey: InjectionKey<StatusBoardModule> = Symbol('StatusBoardModule');

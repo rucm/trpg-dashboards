@@ -16,7 +16,12 @@ export type CardGroup = {
 };
 
 export type State = {
-  id: string,
+  roomId: string,
   groups: Array<CardGroup>,
   template: string
+};
+
+export type FormState = {
+  roomId: string,
+  dialog: boolean
 };

@@ -4,7 +4,7 @@ import { State } from '@/types/statusBoardType';
 export const useStatusBoardState = () => {
 
   const state = reactive<State>({
-    id: '',
+    roomId: '',
     groups: [],
     template: 'sw'
   });
