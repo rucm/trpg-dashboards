@@ -1,13 +1,18 @@
-import { InjectionKey, reactive, readonly } from '@vue/composition-api';
+import { InjectionKey, readonly } from '@vue/composition-api';
 
 export const useGlobalModule = () => {
 
-  const appNames = readonly({
-    statusBoard: 'ステータスボード'
+  const appsInfo = readonly({
+    statusBoard: {
+      id: 'statusboard',
+      name: 'ステータスボード',
+      content: 'キャラクターのステータスを管理するツールです。',
+      link: '/statusboard'
+    }
   });
 
   return {
-    appNames
+    appsInfo
   };
 };
 
