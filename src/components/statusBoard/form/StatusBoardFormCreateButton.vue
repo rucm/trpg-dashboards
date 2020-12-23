@@ -4,7 +4,7 @@
   </status-board-form-wrap-box>
 </template>
 <script lang="ts">
-import { defineComponent, inject } from '@vue/composition-api';
+import { defineComponent, inject, SetupContext } from '@vue/composition-api';
 import StatusBoardFormWrapBox from './StatusBoardFormWrapBox.vue';
 import { StatusBoardFormModule, StatusBoardFormModuleKey } from '@/modules/statusBoard/form';
 
@@ -12,7 +12,7 @@ export default defineComponent({
 
   components: { StatusBoardFormWrapBox },
 
-  setup () {
+  setup (props: {}, ctx: SetupContext) {
 
     const module = inject(StatusBoardFormModuleKey) as StatusBoardFormModule;
     const state = module.state;
@@ -23,6 +23,9 @@ export default defineComponent({
         state.errorMessages.push('既に存在するルームIDです');
         return;
       }
+
+      await module.createNewBoard();
+      ctx.root.$router.push('/statusboard/' + state.roomId);
     }
 
     return {
