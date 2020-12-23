@@ -24,7 +24,6 @@ export default defineComponent({
   components: { HomeContainer, HomeHeader, HomeAppCard },
 
   setup () {
-
     const { appsInfo } = useGlobalModule();
 
     return {

@@ -13,7 +13,6 @@ export default defineComponent({
   components: { StatusBoardFormWrapBox },
 
   setup (props: {}, ctx: SetupContext) {
-
     const module = inject(StatusBoardFormModuleKey) as StatusBoardFormModule;
     const state = module.state;
 

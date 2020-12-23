@@ -20,8 +20,13 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/statusboard',
-    name: 'StatusBoard',
+    name: 'StatusBoardForm',
     component: () => import('../views/statusBoard/Index.vue')
+  },
+  {
+    path: '/statusboard/:roomId',
+    name: 'StatusBoardEditor',
+    component: () => import('../views/statusBoard/Editor.vue')
   }
 ];
 

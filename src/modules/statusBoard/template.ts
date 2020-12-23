@@ -11,7 +11,7 @@ export const useEmptyCardTemplate = () => {
   }
 
   function createEmptyCard (template: string): Card {
-    return { name: '', items: createEmptyCardItems(template) };
+    return { name: '本体', items: createEmptyCardItems(template) };
   }
 
   function createEmptyCardGroup (template: string): CardGroup {

@@ -9,7 +9,7 @@ import { SetupContext, defineComponent, onMounted } from '@vue/composition-api';
 type Props = {};
 
 export default defineComponent({
-  name: 'About',
+  
   setup(props: Props, ctx: SetupContext) {
 
     onMounted(()=> {
