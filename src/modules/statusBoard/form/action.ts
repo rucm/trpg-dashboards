@@ -6,16 +6,20 @@ export const useStatusBoardFormActions = (state: FormState) => {
 
   const template = useEmptyCardTemplate();
 
-  async function isExistRoomId () {
-    console.log(state.roomId);
+  async function isExistRoomId (): Promise<boolean> {
+    if (state.roomId === '') return false;
     const itemRef = await firestore.collection('rooms').doc(state.roomId);
     const doc = await itemRef.get();
-    console.log(doc.exists);
     return doc.exists;
   }
-
+  
   async function createNewBoard () {
+    if (state.roomId === '') return;
+
     const itemRef = await firestore.collection('rooms').doc(state.roomId);
+    const doc = await itemRef.get();
+    if (doc.exists) return;
+
     const board = {
       template: 'sw',
       groups: template.createEmptyCardGroup('sw'),

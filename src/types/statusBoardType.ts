@@ -23,5 +23,5 @@ export type State = {
 
 export type FormState = {
   roomId: string,
-  dialog: boolean
+  errorMessages: Array<string>
 };
