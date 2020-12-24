@@ -2,7 +2,8 @@
 export type CardItem = {
   label: string,
   current: number,
-  max: number
+  max: number,
+  color: string
 };
 
 export type Card = {

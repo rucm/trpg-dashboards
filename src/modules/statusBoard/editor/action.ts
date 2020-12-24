@@ -1,5 +1,5 @@
 import { ref } from '@vue/composition-api';
-import { State, CardGroup } from '@/types/statusBoardType';
+import { State, CardGroup, Card, CardItem } from '@/types/statusBoardType';
 import { useEmptyCardTemplate } from '@/modules/statusBoard/template';
 import { firestore } from '@/plugins/firebase';
 
@@ -28,15 +28,43 @@ export const useStatusBoardActions = (state: State) => {
     state.groups.push(cardGroup);
   }
 
-  function addCard (index: number, name: string) {
+  function addCard (cardGroupIndex: number, name: string) {
     const card = template.createEmptyCard(state.template);
     card.name = name;
-    state.groups[index].cards.push(card);
+    state.groups[cardGroupIndex].cards.push(card);
   }
+
+  function removeCardGroup (cardGroupIndex: number) {
+    state.groups.slice(cardGroupIndex, 1);
+  }
+
+  function removeCard (cardGroupIndex: number, cardIndex: number) {
+    state.groups[cardGroupIndex].cards.slice(cardIndex, 1);
+  }
+
+  async function updateStatus () {
+    const itemRef = firestore.collection('rooms').doc(state.roomId);
+    const doc = await itemRef.get();   
+    if (!doc.exists) return false;
+    await itemRef.update({ groups: state.groups });
+    return true;
+  }
+
+  async function updateCard(cardGroupIndex: number, cardIndex: number, card: Card) {
+    state.groups[cardGroupIndex].cards[cardIndex] = card;
+    await updateStatus();
+  }
+
+  async function updateCardItem(cardGroupIndex: number, cardIndex: number, cardItemIndex: number, cardItem: CardItem) {
+    state.groups[cardGroupIndex].cards[cardIndex].items[cardItemIndex] = cardItem;
+    await updateStatus();
+  }
+
 
   function subscribe () {
     const itemRef = firestore.doc('rooms/' + state.roomId);
     unsubscribeFunc.value = itemRef.onSnapshot((doc) => {
+      console.log('test');
       state.groups = doc.get('groups') as Array<CardGroup>;
     });
   }
@@ -49,6 +77,11 @@ export const useStatusBoardActions = (state: State) => {
     fetchRoomData,
     addCardGroup,
     addCard,
+    removeCardGroup,
+    removeCard,
+    updateStatus,
+    updateCard,
+    updateCardItem,
     subscribe,
     unsubscribe
   };

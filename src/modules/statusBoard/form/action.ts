@@ -30,8 +30,13 @@ export const useStatusBoardFormActions = (state: FormState) => {
     await itemRef.set(board);
   }
 
+  function showErrorMessage (message: string) {
+    state.errorMessages.unshift(message);
+  }
+
   return {
     isExistRoomId,
-    createNewBoard
+    createNewBoard,
+    showErrorMessage
   }
 };

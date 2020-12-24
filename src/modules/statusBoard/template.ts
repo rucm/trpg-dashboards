@@ -4,10 +4,10 @@ export const useEmptyCardTemplate = () => {
 
   function createEmptyCardItems (template: string): Array<CardItem> {
     if (template === 'sw') {
-      return [ { label: 'HP', current: 0, max: 0 }, { label: 'MP', current: 0, max: 0 } ];
+      return [ { label: 'HP', current: 0, max: 0, color: '#ef5350' }, { label: 'MP', current: 0, max: 0, color: '#29B6F6' } ];
     }
 
-    return [ { label: 'HP', current: 0, max: 0 } ];
+    return [ { label: 'HP', current: 0, max: 0, color: '#ef5350' } ];
   }
 
   function createEmptyCard (template: string): Card {
@@ -15,7 +15,7 @@ export const useEmptyCardTemplate = () => {
   }
 
   function createEmptyCardGroup (template: string): CardGroup {
-    return { name: '', cards: [createEmptyCard(template)] };
+    return { name: 'キャラクター', cards: [createEmptyCard(template)] };
   }
 
   return {

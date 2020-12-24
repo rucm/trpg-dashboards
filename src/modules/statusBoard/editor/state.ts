@@ -1,4 +1,4 @@
-import { reactive } from '@vue/composition-api';
+import { reactive, toRefs } from '@vue/composition-api';
 import { State } from '@/types/statusBoardType';
 
 export const useStatusBoardState = () => {

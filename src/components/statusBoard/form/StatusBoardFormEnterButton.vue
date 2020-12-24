@@ -19,7 +19,7 @@ export default defineComponent({
     async function onClick () {
       if (state.roomId === '') return;
       if (!await module.isExistRoomId()) {
-        state.errorMessages.push('存在しないルームIDです');
+        module.showErrorMessage('存在しないルームIDです');
         return;
       }
 
