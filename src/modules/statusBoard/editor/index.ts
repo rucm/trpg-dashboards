@@ -1,4 +1,4 @@
-import { InjectionKey, toRefs } from '@vue/composition-api';
+import { InjectionKey } from '@vue/composition-api';
 import { useStatusBoardState } from './state';
 import { useStatusBoardActions } from './action';
 
