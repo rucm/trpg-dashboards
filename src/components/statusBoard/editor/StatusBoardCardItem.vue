@@ -22,7 +22,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <v-text-field type="number" v-model="localState.editValue"></v-text-field>
+              <v-text-field type="number" v-model.number="localState.editValue"></v-text-field>
             </v-col>
           </v-row>
         </v-card-text>
@@ -67,7 +67,7 @@ export default defineComponent({
       localState.dialog = false;
       
       if (localState.editValue == 0) return;
-      cardItem.value.current += Number(localState.editValue);
+      cardItem.value.current += localState.editValue;
       await updateStatus();
     }
 
@@ -75,7 +75,7 @@ export default defineComponent({
       localState.dialog = false;
       
       if (localState.editValue == 0) return;
-      cardItem.value.current -= Number(localState.editValue);
+      cardItem.value.current -= localState.editValue;
       await updateStatus();
     }
 

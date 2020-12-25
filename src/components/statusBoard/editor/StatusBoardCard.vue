@@ -13,7 +13,7 @@
   </v-row>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, inject } from '@vue/composition-api';
+import { defineComponent, PropType, inject, computed } from '@vue/composition-api';
 import { StatusBoardModule, StatusBoardModuleKey } from '@/modules/statusBoard/editor';
 import StatusBoardCardItem from './StatusBoardCardItem.vue';
 
@@ -23,14 +23,13 @@ export default defineComponent({
 
   props: {
     enableDisplayName: { type: Boolean as PropType<boolean>, required: false, default: true },
-    cardIndex: { type: Number as PropType<number>, required: true },
-    cardGroupIndex: { type: Number as PropType<number>, required: true }
+    cardGroupIndex: { type: Number as PropType<number>, required: true },
+    cardIndex: { type: Number as PropType<number>, required: true }
   },
 
   setup (props) {
-    const { state } = inject(StatusBoardModuleKey) as StatusBoardModule;
-    const cardGroup = state.groups[props.cardGroupIndex];
-    const card = cardGroup.cards[props.cardIndex];
+    const { getCard } = inject(StatusBoardModuleKey) as StatusBoardModule;
+    const card = computed(() => getCard(props.cardGroupIndex, props.cardIndex));
 
     return {
       card
