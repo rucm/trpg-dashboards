@@ -20,6 +20,10 @@ export const useStatusBoardActions = (state: State) => {
     return true;
   }
 
+  function removeCardGroup (cardGroupIndex: number) {
+    state.groups.splice(cardGroupIndex, 1);
+  }
+
   function getCardGroup (cardGroupIndex: number): CardGroup {
     return state.groups[cardGroupIndex];
   }
@@ -53,6 +57,7 @@ export const useStatusBoardActions = (state: State) => {
 
   return {
     fetchRoomData,
+    removeCardGroup,
     getCardGroup,
     getCard,
     getCardItem,

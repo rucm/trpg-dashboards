@@ -4,11 +4,16 @@
       <v-card-title>
         <span>{{ cardGroup.name }}</span>
         <v-spacer></v-spacer>
-        <v-btn icon @click="localState.dialog = true"><v-icon>mdi-pencil</v-icon></v-btn>
+        <v-btn icon @click="localState.editDialog = true"><v-icon>mdi-pencil</v-icon></v-btn>
+        <v-btn icon @click="localState.deleteDialog = true"><v-icon color="red">mdi-delete</v-icon></v-btn>
         <status-board-card-group-dialog
-          v-model="localState.dialog"
+          v-model="localState.editDialog"
           :cardGroupIndex="cardGroupIndex"
         ></status-board-card-group-dialog>
+        <status-board-card-group-delete-dialog
+          v-model="localState.deleteDialog"
+          :cardGroupIndex="cardGroupIndex"
+        ></status-board-card-group-delete-dialog>
       </v-card-title>
       <v-card-text>
         <status-board-card
@@ -26,12 +31,18 @@
 import { defineComponent, inject, PropType, computed, reactive } from '@vue/composition-api';
 import StatusBoardWrapBox from '@/components/statusBoard/common/StatusBoardWrapBox.vue';
 import StatusBoardCardGroupDialog from './dialog/StatusBoardCardGroupDialog.vue';
+import StatusBoardCardGroupDeleteDialog from './dialog/StatusBoardCardGroupDeleteDialog.vue';
 import StatusBoardCard from './StatusBoardCard.vue';
 import { StatusBoardModuleKey, StatusBoardModule } from '@/modules/statusBoard/editor';
 
 export default defineComponent({
 
-  components: { StatusBoardWrapBox, StatusBoardCard, StatusBoardCardGroupDialog },
+  components: {
+    StatusBoardWrapBox,
+    StatusBoardCard,
+    StatusBoardCardGroupDialog,
+    StatusBoardCardGroupDeleteDialog
+  },
 
   props: {
     cardGroupIndex: { type: Number as PropType<number>, required: true }
@@ -43,7 +54,8 @@ export default defineComponent({
 
     const localState = reactive({
       enableDisplayCardName: computed(() => (cardGroup.value.cards.length > 1)),
-      dialog: false
+      editDialog: false,
+      deleteDialog: false
     });
 
     return {
