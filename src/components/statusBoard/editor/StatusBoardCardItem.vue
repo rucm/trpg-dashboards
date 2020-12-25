@@ -30,6 +30,7 @@
           <v-spacer></v-spacer>
           <v-btn @click="addValue" text color="green darken-1">回復</v-btn>
           <v-btn @click="subValue" text color="red darken-1">ダメージ</v-btn>
+          <v-btn @click="localState.dialog = false" text>キャンセル</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
