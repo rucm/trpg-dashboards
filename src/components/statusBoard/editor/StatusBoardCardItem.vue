@@ -1,5 +1,5 @@
 <template>
-  <v-btn block text @click="localState.dialog = true">
+  <v-btn block text @click="opendialog">
     <v-row>
       <v-col cols="2" class="pt-1 pb-1">
         <span class="font-weight-bold">{{ cardItem.label }}</span>
@@ -22,21 +22,21 @@
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <v-text-field type="number" :max="cardItem.max" v-model="localState.editValue"></v-text-field>
+              <v-text-field type="number" v-model="localState.editValue"></v-text-field>
             </v-col>
           </v-row>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn @click="addValue" text color="blue darken-1">回復</v-btn>
-          <v-btn @click="subValue" text color="blue darken-1">ダメージ</v-btn>
+          <v-btn @click="addValue" text color="green darken-1">回復</v-btn>
+          <v-btn @click="subValue" text color="red darken-1">ダメージ</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </v-btn>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, inject, computed, watch, reactive } from '@vue/composition-api';
+import { defineComponent, PropType, inject, computed, reactive } from '@vue/composition-api';
 import { StatusBoardModuleKey, StatusBoardModule } from '@/modules/statusBoard/editor';
 
 export default defineComponent({
@@ -58,21 +58,31 @@ export default defineComponent({
       progressStatus: computed(() => cardItem.value.max === 0 ? 0 : (cardItem.value.current / cardItem.value.max) * 100)
     });
 
-    async function addValue () {
-      cardItem.value.current += Number(localState.editValue);
+    function opendialog (): void {
+      localState.editValue = 0;
+      localState.dialog = true;
+    }
+
+    async function addValue (): Promise<void> {
       localState.dialog = false;
+      
+      if (localState.editValue == 0) return;
+      cardItem.value.current += Number(localState.editValue);
       await updateStatus();
     }
 
-    async function subValue () {
-      cardItem.value.current -= Number(localState.editValue);
+    async function subValue (): Promise<void> {
       localState.dialog = false;
+      
+      if (localState.editValue == 0) return;
+      cardItem.value.current -= Number(localState.editValue);
       await updateStatus();
     }
 
     return {
       cardItem,
       localState,
+      opendialog,
       addValue,
       subValue
     }
