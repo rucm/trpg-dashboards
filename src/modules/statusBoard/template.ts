@@ -1,4 +1,4 @@
-import { Card, CardGroup, CardItem, CharacterPartItem, CharacterPart, CharacterCard } from '@/types/statusBoardType';
+import { Card, CardGroup, CardItem, CharacterPartItem, CharacterPart, Character } from '@/types/statusBoardType';
 import templateData from '@/assets/template.json';
 
 export const useEmptyCardTemplate = () => {
@@ -12,7 +12,7 @@ export const useEmptyCardTemplate = () => {
     return { name: '本体', items: createEmptyCharacterPartItems(template) };
   }
 
-  function createEmptyCharacterCard (template: string): CharacterCard {
+  function createEmptyCharacterCard (template: string): Character {
     return { name: 'キャラクター', parts: [createEmptyCharacterPart(template)] };
   }
 
