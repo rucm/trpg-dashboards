@@ -12,7 +12,7 @@ export const useEmptyCardTemplate = () => {
     return { name: '本体', items: createEmptyCharacterPartItems(template) };
   }
 
-  function createEmptyCharacterCard (template: string): Character {
+  function createEmptyCharacter (template: string): Character {
     return { name: 'キャラクター', parts: [createEmptyCharacterPart(template)] };
   }
 
@@ -35,7 +35,7 @@ export const useEmptyCardTemplate = () => {
   return {
     createEmptyCharacterPartItems,
     createEmptyCharacterPart,
-    createEmptyCharacterCard,
+    createEmptyCharacter,
     createEmptyCardItems,
     createEmptyCard,
     createEmptyCardGroup
