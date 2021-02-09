@@ -1,0 +1,34 @@
+{
+  "sw": [
+    {
+      "name": "HP",
+      "current": 0,
+      "max": 0,
+      "color": "#EF5350",
+      "msg": { "add": "回復", "sub": "ダメージ", "cancel": "キャンセル" }
+    },
+    {
+      "name": "MP",
+      "current": 0,
+      "max": 0,
+      "color": "#29B6F6",
+      "msg": { "add": "回復", "sub": "消費", "cancel": "キャンセル" }
+    }
+  ],
+  "default": [
+    {
+      "name": "HP",
+      "current": 0,
+      "max": 0,
+      "color": "#EF5350",
+      "msg": { "add": "回復", "sub": "ダメージ", "cancel": "キャンセル" }
+    },
+    {
+      "name": "MP",
+      "current": 0,
+      "max": 0,
+      "color": "#29B6F6",
+      "msg": { "add": "回復", "sub": "消費", "cancel": "キャンセル" }
+    }
+  ]
+}

@@ -1,6 +1,20 @@
-import { Card, CardGroup, CardItem } from '@/types/statusBoardType';
+import { Card, CardGroup, CardItem, CharacterPartItem, CharacterPart, CharacterCard } from '@/types/statusBoardType';
+import templateData from '@/assets/template.json';
 
 export const useEmptyCardTemplate = () => {
+
+  function createEmptyCharacterPartItems (template: string): Array<CharacterPartItem> {
+    if (template === 'sw') return templateData.sw;
+    return templateData.default;
+  }
+
+  function createEmptyCharacterPart (template: string): CharacterPart {
+    return { name: '本体', items: createEmptyCharacterPartItems(template) };
+  }
+
+  function createEmptyCharacterCard (template: string): CharacterCard {
+    return { name: 'キャラクター', parts: [createEmptyCharacterPart(template)] };
+  }
 
   function createEmptyCardItems (template: string): Array<CardItem> {
     if (template === 'sw') {
@@ -19,6 +33,9 @@ export const useEmptyCardTemplate = () => {
   }
 
   return {
+    createEmptyCharacterPartItems,
+    createEmptyCharacterPart,
+    createEmptyCharacterCard,
     createEmptyCardItems,
     createEmptyCard,
     createEmptyCardGroup

@@ -16,9 +16,34 @@ export type CardGroup = {
   cards: Array<Card>
 };
 
+export type CharacterPartItemMessage = {
+  add: string,
+  sub: string,
+  cancel: string
+};
+
+export type CharacterPartItem = {
+  name: string,
+  current: number,
+  max: number,
+  color: string,
+  msg: CharacterPartItemMessage
+};
+
+export type CharacterPart = {
+  name: string,
+  items: Array<CharacterPartItem>
+};
+
+export type CharacterCard = {
+  name: string,
+  parts: Array<CharacterPart>
+};
+
 export type State = {
   roomId: string,
   groups: Array<CardGroup>,
+  characters: Array<CharacterCard>,
   template: string
 };
 
