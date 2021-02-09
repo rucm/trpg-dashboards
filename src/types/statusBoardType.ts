@@ -35,7 +35,7 @@ export type CharacterPart = {
   items: Array<CharacterPartItem>
 };
 
-export type CharacterCard = {
+export type Character = {
   name: string,
   parts: Array<CharacterPart>
 };
@@ -43,7 +43,7 @@ export type CharacterCard = {
 export type State = {
   roomId: string,
   groups: Array<CardGroup>,
-  characters: Array<CharacterCard>,
+  characters: Array<Character>,
   template: string
 };
 
