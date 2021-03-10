@@ -1,5 +1,5 @@
 
-export type TemplateType = 'default' | 'sw' | 'goblinslayer';
+export type TemplateType = 'default' | 'sw' | 'goblinSlayer';
 
 export type CharacterPartItemMessage = {
   add: string,

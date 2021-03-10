@@ -2,7 +2,7 @@ import { InjectionKey } from '@vue/composition-api';
 import { useStatusBoardState } from './state';
 import { useStatusBoardAction } from './action';
 
-export const useStatusBoardModule = () => {
+export const useStatusBoardStoreModule = () => {
 
   const state = useStatusBoardState();
   const action = useStatusBoardAction(state);
@@ -13,5 +13,5 @@ export const useStatusBoardModule = () => {
   };
 };
 
-export type StatusBoardModule = ReturnType<typeof useStatusBoardModule>;
-export const StatusBoardModuleKey: InjectionKey<StatusBoardModule> = Symbol('StatusBoardModule');
+export type StatusBoardStoreModule = ReturnType<typeof useStatusBoardStoreModule>;
+export const StatusBoardStoreModuleKey: InjectionKey<StatusBoardStoreModule> = Symbol('StatusBoardStoreModule');

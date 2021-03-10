@@ -17,7 +17,6 @@ import TdCol from '@/layouts/TdCol.vue';
 import SbCharacterPart from '@/components/statusBoard/SbCharacterPart.vue';
 import { SetupContext, defineComponent, PropType, reactive } from '@vue/composition-api';
 import { Character } from '@/types/statusBoardType';
-import { StatusBoardModule, StatusBoardModuleKey } from '@/modules/statusBoard/editor';
 
 export default defineComponent({
 

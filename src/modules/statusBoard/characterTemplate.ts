@@ -1,19 +1,19 @@
-import { CharacterPartItem, CharacterPart, Character } from '@/types/statusBoardType';
+import { TemplateType, CharacterPartItem, CharacterPart, Character } from '@/types/statusBoardType';
 import templateData from '@/assets/template.json';
 
 export const useCharacterTemplate = () => {
 
-  function createEmptyCharacterPartItems (template: string): Array<CharacterPartItem> {
+  function createEmptyCharacterPartItems (template: TemplateType): Array<CharacterPartItem> {
     if (template === 'sw') return templateData.sw;
-    else if (template === 'goblinSlayer') return templateData.goblinSlayer;
+    if (template === 'goblinSlayer') return templateData.goblinSlayer;
     return templateData.default;
   }
 
-  function createEmptyCharacterPart (template: string): CharacterPart {
+  function createEmptyCharacterPart (template: TemplateType): CharacterPart {
     return { name: '本体', items: createEmptyCharacterPartItems(template) };
   }
 
-  function createEmptyCharacter (template: string): Character {
+  function createEmptyCharacter (template: TemplateType): Character {
     return {
       id: '',
       name: 'キャラクター', 
