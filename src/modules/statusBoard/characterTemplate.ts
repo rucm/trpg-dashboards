@@ -1,5 +1,5 @@
 import { TemplateType, CharacterPartItem, CharacterPart, Character } from '@/types/statusBoardType';
-import templateData from '@/assets/template.json';
+import templateData from '@/assets/statusBoardTemplate.json';
 
 export const useCharacterTemplate = () => {
 
