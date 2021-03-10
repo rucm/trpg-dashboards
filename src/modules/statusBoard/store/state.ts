@@ -5,8 +5,8 @@ export const useStatusBoardState = () => {
 
   const state = reactive<State>({
     roomId: '',
-    groups: [],
-    template: 'sw'
+    characters: [],
+    template: 'default'
   });
 
   return state;

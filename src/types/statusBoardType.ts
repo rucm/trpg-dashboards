@@ -1,20 +1,5 @@
 
-export type CardItem = {
-  label: string,
-  current: number,
-  max: number,
-  color: string
-};
-
-export type Card = {
-  name: string,
-  items: Array<CardItem>
-};
-
-export type CardGroup = {
-  name: string,
-  cards: Array<Card>
-};
+export type TemplateType = 'default' | 'sw' | 'goblinslayer';
 
 export type CharacterPartItemMessage = {
   add: string,
@@ -36,18 +21,14 @@ export type CharacterPart = {
 };
 
 export type Character = {
+  id: string,
   name: string,
-  parts: Array<CharacterPart>
+  parts: Array<CharacterPart>,
+  order: number
 };
 
 export type State = {
   roomId: string,
-  groups: Array<CardGroup>,
   characters: Array<Character>,
-  template: string
-};
-
-export type FormState = {
-  roomId: string,
-  errorMessages: Array<string>
+  template: TemplateType
 };

@@ -1,5 +1,5 @@
 import { ref } from '@vue/composition-api';
-import { State, CardGroup, Card, CardItem } from '@/types/statusBoardType';
+import { State, CardGroup, Card, CardItem, Character } from '@/types/statusBoardType';
 import { firestore } from '@/plugins/firebase';
 
 
@@ -8,17 +8,22 @@ export const useStatusBoardActions = (state: State) => {
   const unsubscribeFunc = ref<Function>(() => true);
 
   async function fetchRoomData (roomId: string): Promise<boolean> {
-    const itemRef = await firestore.collection('rooms').doc(roomId);
+    const itemRef = await firestore.collection('statusBoardRooms').doc(roomId);
     const doc = await itemRef.get();
     
     if (!doc.exists) return false;
 
+    // const query = await itemRef.collection('characters').orderBy('order', 'asc').get();
+
     state.roomId = roomId;
     state.template = doc.get('template') as string;
     state.groups = doc.get('groups') as Array<CardGroup>;
+    // state.characters = as Array<Character>;
 
     return true;
   }
+
+  function removeCharacter () {}
 
   function removeCardGroup (cardGroupIndex: number) {
     state.groups.splice(cardGroupIndex, 1);
@@ -49,6 +54,9 @@ export const useStatusBoardActions = (state: State) => {
     unsubscribeFunc.value = itemRef.onSnapshot((doc) => {
       state.groups = doc.get('groups') as Array<CardGroup>;
     });
+
+    const roomRef = firestore.doc('statusBoardRooms/' + state.roomId);
+    
   }
 
   function unsubscribe () {
