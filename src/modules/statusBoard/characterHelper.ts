@@ -1,3 +1,4 @@
+import { InjectionKey } from '@vue/composition-api';
 import { Character, CharacterPart, CharacterPartItem, TemplateType } from '@/types/statusBoardType';
 import { useCharacterTemplate } from '@/modules/statusBoard/characterTemplate';
 
@@ -50,3 +51,6 @@ export const useCharacterHelper = (character: Character, template: TemplateType)
     updateCharacterPartItem
   }
 };
+
+export type CharacterHelperModule = ReturnType<typeof useCharacterHelper>;
+export const CharacterHeplerModuleKey: InjectionKey<CharacterHelperModule> = Symbol('CharacterHelperModule');
