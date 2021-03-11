@@ -8,6 +8,7 @@ export type CharacterPartItemMessage = {
 };
 
 export type CharacterPartItem = {
+  id: string,
   name: string,
   current: number,
   max: number,
@@ -16,8 +17,10 @@ export type CharacterPartItem = {
 };
 
 export type CharacterPart = {
+  id: string,
   name: string,
-  items: Array<CharacterPartItem>
+  items: Array<CharacterPartItem>,
+  order: number
 };
 
 export type Character = {

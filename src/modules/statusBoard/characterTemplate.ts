@@ -10,7 +10,12 @@ export const useCharacterTemplate = () => {
   }
 
   function createEmptyCharacterPart (template: TemplateType): CharacterPart {
-    return { name: '本体', items: createEmptyCharacterPartItems(template) };
+    return {
+      id: 'part-0',
+      name: '本体',
+      items: createEmptyCharacterPartItems(template),
+      order: 0
+    };
   }
 
   function createEmptyCharacter (template: TemplateType): Character {

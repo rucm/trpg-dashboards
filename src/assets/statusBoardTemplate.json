@@ -1,6 +1,7 @@
 {
   "sw": [
     {
+      "id": "hp",
       "name": "HP",
       "current": 0,
       "max": 0,
@@ -8,6 +9,7 @@
       "msg": { "add": "回復", "sub": "ダメージ", "cancel": "キャンセル" }
     },
     {
+      "id": "mp",
       "name": "MP",
       "current": 0,
       "max": 0,
@@ -17,6 +19,7 @@
   ],
   "goblinSlayer": [
     {
+      "id": "hp",
       "name": "生命力×2",
       "current": 0,
       "max": 0,
@@ -24,6 +27,7 @@
       "msg": { "add": "回復", "sub": "ダメージ", "cancel": "キャンセル" }
     },
     {
+      "id": "magic",
       "name": "魔法使用回数",
       "current": 0,
       "max": 0,
@@ -33,6 +37,7 @@
   ],
   "default": [
     {
+      "id": "hp",
       "name": "HP",
       "current": 0,
       "max": 0,
@@ -40,6 +45,7 @@
       "msg": { "add": "回復", "sub": "ダメージ", "cancel": "キャンセル" }
     },
     {
+      "id": "mp",
       "name": "MP",
       "current": 0,
       "max": 0,
