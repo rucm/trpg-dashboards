@@ -12,7 +12,7 @@ export const useCharacterHelper = (character: Character, template: TemplateType)
       items: characterTemplate.createEmptyCharacterPartItems(template),
       order: Math.max(...character.parts.map(p => p.order)) + 1
     };
-    
+
     character.parts.push(characterPart);
   }
 
@@ -37,7 +37,6 @@ export const useCharacterHelper = (character: Character, template: TemplateType)
     const partItem = characterPart.items.find(i => i.id === item.id);
     if (!partItem) return false;
 
-    partItem.name = item.name;
     partItem.current = item.current;
     partItem.max = item.max;
 
