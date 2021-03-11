@@ -9,7 +9,7 @@ export const useStatusBoardAction = (state: State) => {
   const characterTemplate = useCharacterTemplate();
 
   async function fetchRoom (roomId: string): Promise<boolean> {
-    const roomRef = await firestore.collection('statusBoardRoom').doc(roomId);
+    const roomRef = firestore.collection('statusBoardRoom').doc(roomId);
     const roomDoc = await roomRef.get();
 
     if (!roomDoc.exists) return false;
@@ -21,7 +21,7 @@ export const useStatusBoardAction = (state: State) => {
   }
 
   async function existsRoomId (roomId: string): Promise<boolean> {
-    const roomRef = await firestore.collection('statusBoardRooms').doc(roomId);
+    const roomRef = firestore.collection('statusBoardRooms').doc(roomId);
     const roomDoc = await roomRef.get();
     return roomDoc.exists;
   }
@@ -36,7 +36,7 @@ export const useStatusBoardAction = (state: State) => {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     };
-    const roomRef = await firestore.collection('statusBoardRooms').doc(roomId);
+    const roomRef = firestore.collection('statusBoardRooms').doc(roomId);
     await roomRef.set(room);
     return true;
   }
@@ -55,13 +55,13 @@ export const useStatusBoardAction = (state: State) => {
           state.characters.push({
             id: change.doc.id,
             name: data.name,
-            parts: data.parts,
+            parts: data.parts.sort((p1, p2) => p1.order - p2.order),
             order: data.order
           });
         }
 
         if (change.type === 'modified') {
-          let character = state.characters.find(v => v.id === change.doc.id);
+          const character = state.characters.find(v => v.id === change.doc.id);
           if (!character) return;
           const data = change.doc.data() as Character;
           character.name = data.name;
@@ -79,8 +79,33 @@ export const useStatusBoardAction = (state: State) => {
     return true;
   }
 
-  function unsubscribe () {
+  function unsubscribe (): void {
     unsubscribeListener.value();
+  }
+
+  async function addCharacter (character: Character): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(state.roomId);
+    await roomRef.collection('characters').add({
+      name: character.name,
+      parts: character.parts,
+      order: Math.max(...state.characters.map(c => c.order)) + 1
+    });
+  }
+
+  async function updateCharacter (character: Character): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(state.roomId);
+    const characterRef = roomRef.collection('characters').doc(character.id);
+    await characterRef.update({
+      name: character.name,
+      parts: character.parts,
+      order: character.order
+    });
+  }
+
+  async function removeCharacter (character: Character): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(state.roomId);
+    const characterRef = roomRef.collection('characters').doc(character.id);
+    await characterRef.delete();
   }
 
   return {
@@ -88,6 +113,9 @@ export const useStatusBoardAction = (state: State) => {
     existsRoomId,
     createNewRoom,
     subscribe,
-    unsubscribe
+    unsubscribe,
+    addCharacter,
+    updateCharacter,
+    removeCharacter
   };
 }
