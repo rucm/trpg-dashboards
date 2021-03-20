@@ -1,18 +1,32 @@
-import { InjectionKey, readonly } from '@vue/composition-api';
+import { InjectionKey, computed } from '@vue/composition-api';
 
 export const useGlobalModule = () => {
 
-  const appsInfo = readonly({
-    statusBoard: {
-      id: 'statusboard',
-      name: 'ステータスボード',
-      content: 'キャラクターのステータスを管理するツールです。',
-      link: '/statusboard'
-    }
-  });
+  const appConfig = computed(() => {
+    return {
+      tools: [
+        { 
+          id: 'statusBoard',
+          name: 'ステータスボード',
+          content: 'キャラクターのステータスを管理するツールです。',
+          link: '/statusboard'
+        },
+        {
+          id: 'statusBoard2',
+          name: 'ステータスボード',
+          content: 'キャラクターのステータスを管理するツールです。',
+          link: '/statusboard'
+        }
+      ],
+      title: 'TRPG Dashboard',
+      headers: {
+        tool: 'ツール一覧'
+      }
+    };
+  })
 
   return {
-    appsInfo
+    appConfig
   };
 };
 
