@@ -3,7 +3,7 @@ import { Character, CharacterParameter } from '@/types/statusBoard';
 import { useStatusBoardTemplateModule } from '@/modules/statusBoard/template';
 import { StatusBoardStoreModule } from '@/modules/statusBoard/store';
 
-export const useCharacterModule = (store: StatusBoardStoreModule) => {
+export const useStatusBoardCharacterModule = (store: StatusBoardStoreModule) => {
 
   const characterTemplate = useStatusBoardTemplateModule();
   const roomRef = firestore.collection('statusBoardRooms').doc(store.room.value.roomId);
@@ -11,7 +11,7 @@ export const useCharacterModule = (store: StatusBoardStoreModule) => {
   async function create (name: string): Promise<void> {
     await roomRef.collection('characters').add({
       name: name,
-      parameters: characterTemplate.createEmptyCharacterParameters(store.room.value.template),
+      parameters: characterTemplate.createCharacterParameters(store.room.value.template),
       order: Math.max(...store.characters.value.map(c => c.order)) + 1
     });
   }
