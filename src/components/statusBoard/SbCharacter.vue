@@ -1,6 +1,6 @@
 <template>
   <td-col>
-    <v-card>
+    <v-card flat>
 
       <v-card-title>
         <span>{{ character.name }}</span>
@@ -8,6 +8,10 @@
         <v-btn icon @click="localState.editDialog = true"><v-icon>mdi-pencil</v-icon></v-btn>
         <v-btn icon @click="localState.deleteDialog = true"><v-icon color="red">mdi-delete</v-icon></v-btn>
       </v-card-title>
+
+      <v-card-text>
+        <sb-character-part></sb-character-part>
+      </v-card-text>
     
     </v-card>
   </td-col>
@@ -16,7 +20,7 @@
 import TdCol from '@/layouts/TdCol.vue';
 import SbCharacterPart from '@/components/statusBoard/SbCharacterPart.vue';
 import { SetupContext, defineComponent, PropType, reactive } from '@vue/composition-api';
-import { Character } from '@/types/statusBoardType';
+import { Character } from '@/types/statusBoard';
 
 export default defineComponent({
 
@@ -26,7 +30,7 @@ export default defineComponent({
   },
 
   props: {
-    character: { type: Object as PropType<Character>, rewuired: true }
+    character: { type: Object as PropType<Character>, required: true }
   },
 
   setup (props, ctx: SetupContext) {

@@ -1,0 +1,50 @@
+{
+    "sw": [
+      {
+        "partsName": "本体",
+        "name": "HP",
+        "current": 0,
+        "max": 0,
+        "color": "#EF5350"
+    },
+    {
+        "partsName": "本体",
+        "name": "MP",
+        "current": 0,
+        "max": 0,
+        "color": "#29B6F6"
+      }
+    ],
+    "goblinSlayer": [
+      {
+        "partsName": "本体",
+        "name": "生命力×2",
+        "current": 0,
+        "max": 0,
+        "color": "#EF5350"
+      },
+      {
+        "partsName": "本体",
+        "name": "魔法使用回数",
+        "current": 0,
+        "max": 0,
+        "color": "#29B6F6"
+      }
+    ],
+    "default": [
+      {
+        "partsName": "本体",
+        "name": "HP",
+        "current": 0,
+        "max": 0,
+        "color": "#EF5350"
+      },
+      {
+        "partsName": "本体",
+        "name": "MP",
+        "current": 0,
+        "max": 0,
+        "color": "#29B6F6"
+      }
+    ]
+  }

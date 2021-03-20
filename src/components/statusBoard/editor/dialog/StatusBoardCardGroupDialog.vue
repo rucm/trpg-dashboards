@@ -34,7 +34,7 @@
 <script lang="ts">
 import { defineComponent, PropType, SetupContext, inject, computed, reactive, watch } from '@vue/composition-api';
 import { StatusBoardModuleKey, StatusBoardModule } from '@/modules/statusBoard/editor';
-import { CardGroup } from '@/types/statusBoardType';
+import { CardGroup } from '@/types/statusBoard';
 
 export default defineComponent({
 
