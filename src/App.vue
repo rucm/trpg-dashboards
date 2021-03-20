@@ -2,7 +2,9 @@
   <v-app>
 
     <v-app-bar app color="primary" dark dense>
-      <v-toolbar-title @click="onPushRouteHome">TRPG Dashboards</v-toolbar-title>
+      <v-toolbar-title @click="onPushRouteHome" style="cursor: pointer;">
+        {{ appConfig.title }}
+      </v-toolbar-title>
     </v-app-bar>
 
     <v-main>
@@ -14,11 +16,14 @@
 
 <script lang="ts">
 import { defineComponent, SetupContext } from '@vue/composition-api';
+import { useGlobalModule } from '@/modules/global';
 
 export default defineComponent({
   name: 'App',
 
   setup(props: {}, ctx: SetupContext) {
+
+    const { appConfig } = useGlobalModule();
 
     function onPushRouteHome() {
       if (ctx.root.$route.path !== '/') {
@@ -27,6 +32,7 @@ export default defineComponent({
     }
 
     return {
+      appConfig,
       onPushRouteHome
     };
   }

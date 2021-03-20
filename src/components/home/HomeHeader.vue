@@ -1,17 +1,15 @@
 <template>
-  <home-wrap-box>
-    <span class="h1">{{ title }}</span>
-  </home-wrap-box>
+  <td-col :md="10">
+    <v-sheet class="pa-1 headline">{{ title }}</v-sheet>
+  </td-col>
 </template>
 <script lang="ts">
-import HomeWrapBox from '@/components/home/HomeWrapBox.vue';
+import TdCol from '@/layouts/TdCol.vue';
 import { defineComponent, PropType } from '@vue/composition-api';
 
 export default defineComponent({
-  name: 'HomeHeader',
 
-  components: { HomeWrapBox },
-
+  components: { TdCol },
   props: {
     title: { type: String as PropType<string>, required: true }
   }
