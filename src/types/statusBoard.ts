@@ -17,6 +17,7 @@ export type Character = {
 };
 
 export type Room = {
+  id: string,
   roomId: string,
   template: TemplateType
 };
