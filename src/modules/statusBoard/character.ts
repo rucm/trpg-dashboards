@@ -1,34 +1,38 @@
-import { firestore, firebase } from '@/plugins/firebase';
-import { Character, CharacterParameter } from '@/types/statusBoard';
+import { firestore } from '@/plugins/firebase';
+import { CharacterParameter } from '@/types/statusBoard';
 import { useStatusBoardTemplateModule } from '@/modules/statusBoard/template';
 import { StatusBoardStoreModule } from '@/modules/statusBoard/store';
+import { InjectionKey } from '@vue/composition-api';
 
 export const useStatusBoardCharacterModule = (store: StatusBoardStoreModule) => {
 
   const characterTemplate = useStatusBoardTemplateModule();
-  const roomRef = firestore.collection('statusBoardRooms').doc(store.room.value.roomId);
-
+  
   async function create (name: string): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(store.room.value.roomId);
     await roomRef.collection('characters').add({
       name: name,
       parameters: characterTemplate.createCharacterParameters(store.room.value.template),
       order: Math.max(...store.characters.value.map(c => c.order)) + 1
     });
   }
-
+  
   async function remove (characterId: string): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(store.room.value.roomId);
     const characterRef = roomRef.collection('characters').doc(characterId);
     if (!(await characterRef.get()).exists) return;
     await characterRef.delete();
   }
   
   async function updateName (characterId: string, name: string): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(store.room.value.roomId);
     const characterRef = roomRef.collection('characters').doc(characterId);
     if (!(await characterRef.get()).exists) return;
     await characterRef.update({ name: name });
   }
   
   async function updateParameters (characterId: string, parameters: Array<CharacterParameter>): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(store.room.value.roomId);
     const characterRef = roomRef.collection('characters').doc(characterId);
     if (!(await characterRef.get()).exists) return;
     await characterRef.update({ parameters: parameters });
@@ -41,3 +45,6 @@ export const useStatusBoardCharacterModule = (store: StatusBoardStoreModule) => 
     updateParameters
   };
 };
+
+export type StatusBoardCharacterModule = ReturnType<typeof useStatusBoardCharacterModule>;
+export const StatusBoardCharacterModuleKey: InjectionKey<StatusBoardCharacterModule> = Symbol('StatusBoardCharacterModule');

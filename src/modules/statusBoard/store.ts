@@ -7,20 +7,18 @@ export const useStatusBoardStoreModule = () => {
   const unsubscribeListener = ref<Function>(() => true);
 
   const state = reactive<State>({
-    roomId: '',
-    template: 'default',
+    room: { roomId: '', name: '', template: 'default' },
     characters: [],
   });
 
   function initialize (room: Room): void {
-    state.roomId = room.roomId;
-    state.template = room.template;
+    state.room = room;
   }
 
   function subscribe (): boolean {
-    if (!state.roomId) return false;
+    if (!state.room.roomId) return false;
 
-    const roomRef = firestore.collection('statusBoardRooms').doc(state.roomId);
+    const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
     const charactersRef = roomRef.collection('characters').orderBy('order', 'asc');
 
     unsubscribeListener.value = charactersRef.onSnapshot(query => {
@@ -60,7 +58,7 @@ export const useStatusBoardStoreModule = () => {
   }
 
   return {
-    room: computed(() => <Room>{ roomId: state.roomId, template: state.template }),
+    room: computed(() => state.room),
     characters: computed(() => state.characters),
     initialize,
     subscribe,

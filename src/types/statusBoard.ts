@@ -17,13 +17,18 @@ export type Character = {
 };
 
 export type Room = {
-  id: string,
   roomId: string,
+  name: string,
   template: TemplateType
 };
 
 export type State = {
-  roomId: string,
-  template: TemplateType,
+  room: Room,
   characters: Array<Character>
 };
+
+export type FormState = {
+  name: string,
+  password: string,
+  link: string
+}
