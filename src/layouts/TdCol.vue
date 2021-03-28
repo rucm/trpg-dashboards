@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" :md="md" :sm="sm">
+  <v-col cols="11" :md="md" :sm="sm">
     <slot></slot>
   </v-col>
 </template>
