@@ -12,17 +12,18 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
-        <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
+        <v-btn icon><v-icon color="red" @click="remove">mdi-delete</v-icon></v-btn>
       </v-card-actions>
 
     </v-card>
   </td-col>
 </template>
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api';
+import { defineComponent, PropType, inject } from '@vue/composition-api';
 import TdRow from '@/layouts/TdRow.vue';
 import TdCol from '@/layouts/TdCol.vue';
 import { Character } from '@/types/statusBoard';
+import { StatusBoardCharacterModuleKey, StatusBoardCharacterModule } from '@/modules/statusBoard/character';
 
 export default defineComponent({
   components: { TdRow, TdCol },
@@ -31,8 +32,17 @@ export default defineComponent({
     character: { type: Object as PropType<Character>, required: true }
   },
 
-  // setup (props) {
+  setup (props) {
     
-  // }
+    const characterModule = inject(StatusBoardCharacterModuleKey) as StatusBoardCharacterModule;
+
+    const remove = () => {
+      characterModule.remove(props.character.id);
+    }
+
+    return {
+      remove
+    };
+  }
 });
 </script>
