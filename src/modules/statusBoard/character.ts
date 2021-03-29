@@ -13,7 +13,7 @@ export const useStatusBoardCharacterModule = (store: StatusBoardStoreModule) => 
     await roomRef.collection('characters').add({
       name: name,
       parameters: characterTemplate.createCharacterParameters(store.room.value.template),
-      order: Math.max(...store.characters.value.map(c => c.order)) + 1
+      order: Math.max(...store.characters.value.map(c => c.order), 0) + 1
     });
   }
   
