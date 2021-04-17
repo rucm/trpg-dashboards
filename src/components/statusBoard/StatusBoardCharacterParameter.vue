@@ -13,17 +13,13 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api';
 import { CharacterParameter } from '@/types/statusBoard';
+import { defineComponent, PropType } from '@vue/composition-api';
 
 export default defineComponent({
   
   props: {
     parameter: { type: Object as PropType<CharacterParameter>, required: true }
-  },
-
-  // setup (props) {
-
-  // }
+  }
 });
 </script>

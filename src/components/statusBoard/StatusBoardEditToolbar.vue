@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent, inject } from '@vue/composition-api';
 import TdCol from '@/layouts/TdCol.vue';
-import { StatusBoardCharacterModule, StatusBoardCharacterModuleKey } from '@/modules/statusBoard/character';
+import { StatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/statusBoard/store';
 
 export default defineComponent({
 
@@ -18,10 +18,10 @@ export default defineComponent({
 
   setup () {
 
-    const characterModule = inject(StatusBoardCharacterModuleKey) as StatusBoardCharacterModule;
+    const store = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
 
     const create = async () => {
-      await characterModule.create('新規キャラクター');
+      await store.create('新規キャラクター');
     }
 
     return {

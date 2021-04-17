@@ -16,7 +16,6 @@
 import { defineComponent, provide, SetupContext, onMounted, onBeforeUnmount } from '@vue/composition-api';
 import { useStatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/statusBoard/store';
 import { useStatusBoardRoomModule } from '@/modules/statusBoard/room';
-import { useStatusBoardCharacterModule, StatusBoardCharacterModuleKey } from '@/modules/statusBoard/character';
 import TdRow from '@/layouts/TdRow.vue';
 import TdCol from '@/layouts/TdCol.vue';
 import StatusBoardCharacter from '@/components/statusBoard/StatusBoardCharacter.vue';
@@ -31,7 +30,6 @@ export default defineComponent({
     const storeModule = useStatusBoardStoreModule();
     const roomModule = useStatusBoardRoomModule();
     provide(StatusBoardStoreModuleKey, storeModule);
-    provide(StatusBoardCharacterModuleKey, useStatusBoardCharacterModule(storeModule));
 
     onMounted(async () => {
       const room = await roomModule.fetch(ctx.root.$route.params['roomId'] as string);

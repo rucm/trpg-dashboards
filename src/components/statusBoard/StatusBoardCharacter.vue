@@ -1,5 +1,5 @@
 <template>
-  <td-col :md="5">
+  <td-col :md="6">
     <v-card shaped tile>
 
       <v-card-title>
@@ -32,7 +32,7 @@ import TdRow from '@/layouts/TdRow.vue';
 import TdCol from '@/layouts/TdCol.vue';
 import StatusBoardCharacterParameter from '@/components/statusBoard/StatusBoardCharacterParameter.vue';
 import { Character, CharacterParameter } from '@/types/statusBoard';
-import { StatusBoardCharacterModuleKey, StatusBoardCharacterModule } from '@/modules/statusBoard/character';
+import { StatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/statusBoard/store';
 
 export default defineComponent({
   components: { TdRow, TdCol, StatusBoardCharacterParameter },
@@ -42,11 +42,10 @@ export default defineComponent({
   },
 
   setup (props) {
-    
-    const characterModule = inject(StatusBoardCharacterModuleKey) as StatusBoardCharacterModule;
+    const store = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
 
     const remove = () => {
-      characterModule.remove(props.character.id);
+      store.remove(props.character.id);
     }
 
     const parts = computed(() => {
@@ -61,14 +60,9 @@ export default defineComponent({
       return result;
     });
 
-    const test = () => {
-      console.log('test');
-    }
-
     return {
       remove,
-      parts,
-      test
+      parts
     };
   }
 });
