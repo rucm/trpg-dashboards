@@ -1,25 +1,23 @@
-import { Character } from '@/types/statusBoard';
-import { StatusBoardStoreModule } from '@/modules/statusBoard/store';
-import { InjectionKey } from '@vue/composition-api';
+import { Character, CharacterParameter } from '@/types/statusBoard';
+import { computed, InjectionKey } from '@vue/composition-api';
 
-export const useStatusBoardCharacterModule = (character: Character, store: StatusBoardStoreModule) => {
+export const useStatusBoardCharacterModule = (character: Character) => {
 
-  async function updateName (name: string): Promise<void> {
-    character.name = name;
-    await store.update(character);
-  }
-
-  async function updateParameter (partsName: string, name: string, current: number, max: number): Promise<void> {
-    const parameter = character.parameters.find(c => c.partsName === partsName && c.name === name);
-    if (!parameter) return;
-    parameter.current = current;
-    parameter.max = max;
-    await store.update(character);
-  }
+  const parts = computed(() => {
+    const partsList = Array.from(new Set(character.parameters.map(p => p.partsName)));
+      const result: { id: number; partsName: string; parameters: CharacterParameter[] }[] = [];
+      partsList.forEach((partsName, index) => {
+        result.push({
+          id: index,
+          partsName: partsName,
+          parameters: character.parameters.filter(parameter => parameter.partsName === partsName)
+        });
+      });
+      return result;
+  });
 
   return {
-    updateName,
-    updateParameter
+    parts
   };
 };
 

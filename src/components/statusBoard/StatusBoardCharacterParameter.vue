@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-2 d-flex align-center">
+  <div class="pb-3 d-flex align-center">
     <div class="pr-2" style="min-width: 4em; text-align: center;">{{ parameter.name }}</div>
     <v-progress-linear
       height="1.5em"
@@ -10,6 +10,7 @@
         <div>{{ value }} / {{ parameter.max }}</div>
       </template>
     </v-progress-linear>
+    <v-btn tile height="1.5em" color="secondary">変更</v-btn>
   </div>
 </template>
 <script lang="ts">

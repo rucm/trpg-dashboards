@@ -7,7 +7,7 @@
       </v-card-title>
 
       <v-card-text>
-        <div v-for="part in parts" :key="part.partsName">
+        <div v-for="part in parts" :key="part.id">
           <div>{{ part.partsName }}</div>
           <status-board-character-parameter
             v-for="parameter in part.parameters"
@@ -19,23 +19,31 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn icon><v-icon>mdi-pencil</v-icon></v-btn>
+        <v-btn icon @click="localState.editDialog = true"><v-icon>mdi-pencil</v-icon></v-btn>
         <v-btn icon><v-icon color="red" @click="remove">mdi-delete</v-icon></v-btn>
       </v-card-actions>
+
+      <status-board-character-edit-dialog
+        v-model="localState.editDialog"
+        :character="character"
+        @done="update"
+      ></status-board-character-edit-dialog>
 
     </v-card>
   </td-col>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, inject, computed } from '@vue/composition-api';
+import { defineComponent, PropType, inject, reactive } from '@vue/composition-api';
 import TdRow from '@/layouts/TdRow.vue';
 import TdCol from '@/layouts/TdCol.vue';
 import StatusBoardCharacterParameter from '@/components/statusBoard/StatusBoardCharacterParameter.vue';
-import { Character, CharacterParameter } from '@/types/statusBoard';
+import StatusBoardCharacterEditDialog from '@/components/statusBoard/StatusBoardCharacterEditDialog.vue';
+import { Character } from '@/types/statusBoard';
 import { StatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/statusBoard/store';
+import { useStatusBoardCharacterModule } from '@/modules/statusBoard/character';
 
 export default defineComponent({
-  components: { TdRow, TdCol, StatusBoardCharacterParameter },
+  components: { TdRow, TdCol, StatusBoardCharacterParameter, StatusBoardCharacterEditDialog },
 
   props: {
     character: { type: Object as PropType<Character>, required: true }
@@ -43,26 +51,21 @@ export default defineComponent({
 
   setup (props) {
     const store = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
+    const characterModule = useStatusBoardCharacterModule(props.character);
+
+    const localState = reactive({
+      editDialog: false
+    });
 
     const remove = () => {
       store.remove(props.character.id);
     }
 
-    const parts = computed(() => {
-      const partsList = Array.from(new Set(props.character.parameters.map(p => p.partsName)));
-      const result: { partsName: string; parameters: CharacterParameter[] }[] = [];
-      partsList.forEach(partsName => {
-        result.push({
-          partsName: partsName,
-          parameters: props.character.parameters.filter(parameter => parameter.partsName === partsName)
-        });
-      });
-      return result;
-    });
-
     return {
+      localState,
       remove,
-      parts
+      update: store.update,
+      parts: characterModule.parts
     };
   }
 });
