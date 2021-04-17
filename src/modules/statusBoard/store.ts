@@ -1,10 +1,12 @@
 import { ref, reactive, computed, InjectionKey } from '@vue/composition-api';
 import { Room, State, Character } from '@/types/statusBoard';
 import { firestore } from '@/plugins/firebase';
+import { useStatusBoardTemplateModule } from '@/modules/statusBoard/template';
 
 export const useStatusBoardStoreModule = () => {
 
   const unsubscribeListener = ref<Function>(() => true);
+  const characterTemplate = useStatusBoardTemplateModule();
 
   const state = reactive<State>({
     room: { roomId: '', name: '', template: 'default' },
@@ -57,12 +59,42 @@ export const useStatusBoardStoreModule = () => {
     unsubscribeListener.value();
   }
 
+  async function create (name: string): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
+    await roomRef.collection('characters').add({
+      name: name,
+      parameters: characterTemplate.createCharacterParameters(state.room.template),
+      order: Math.max(...state.characters.map(c => c.order), 0) + 1
+    });
+  }
+
+  async function remove (characterId: string): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
+    const characterRef = roomRef.collection('characters').doc(characterId);
+    if (!(await characterRef.get()).exists) return;
+    await characterRef.delete();
+  }
+  
+  async function update (character: Character): Promise<void> {
+    const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
+    const characterRef = roomRef.collection('characters').doc(character.id);
+    if (!(await characterRef.get()).exists) return;
+    await characterRef.update({
+      name: character.name,
+      parameters: character.parameters,
+      order: character.order
+    });
+  }
+
   return {
     room: computed(() => state.room),
     characters: computed(() => state.characters),
     initialize,
     subscribe,
     unsubscribe,
+    create,
+    remove,
+    update
   };
 };
 
