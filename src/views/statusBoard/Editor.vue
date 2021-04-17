@@ -1,11 +1,15 @@
 <template>
   <td-row>
     <status-board-edit-toolbar></status-board-edit-toolbar>
-    <status-board-character
-      v-for="character in characters"
-      :key="character.id"
-      :character="character"
-    ></status-board-character>
+    <td-col :md="10" class="pa-0">
+      <td-row justify-md="start" class="pa-0">
+        <status-board-character
+          v-for="character in characters"
+          :key="character.id"
+          :character="character"
+        ></status-board-character>
+      </td-row>
+    </td-col>
   </td-row>
 </template>
 <script lang="ts">
@@ -14,12 +18,13 @@ import { useStatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/
 import { useStatusBoardRoomModule } from '@/modules/statusBoard/room';
 import { useStatusBoardCharacterModule, StatusBoardCharacterModuleKey } from '@/modules/statusBoard/character';
 import TdRow from '@/layouts/TdRow.vue';
+import TdCol from '@/layouts/TdCol.vue';
 import StatusBoardCharacter from '@/components/statusBoard/StatusBoardCharacter.vue';
 import StatusBoardEditToolbar from '@/components/statusBoard/StatusBoardEditToolbar.vue';
 
 export default defineComponent({
 
-  components: { TdRow, StatusBoardCharacter, StatusBoardEditToolbar },
+  components: { TdRow, TdCol, StatusBoardCharacter, StatusBoardEditToolbar },
 
   setup (props: {}, ctx: SetupContext) {
 
