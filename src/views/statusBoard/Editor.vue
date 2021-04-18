@@ -1,7 +1,7 @@
 <template>
   <td-container>
     <td-row>
-      <td-col md="10">
+      <td-col md="10" class="pa-0">
         <status-board-edit-toolbar></status-board-edit-toolbar>
       </td-col>
       <td-col md="10" class="pa-0">

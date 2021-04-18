@@ -4,10 +4,10 @@
     <v-progress-linear
       height="1.5em"
       striped
-      :value="parameter.current"
+      :value="parcentage"
       :color="parameter.color">
-      <template v-slot:default="{ value }">
-        <div>{{ value }} / {{ parameter.max }}</div>
+      <template v-slot:default="{}">
+        <div>{{ parameter.current }} / {{ parameter.max }}</div>
       </template>
     </v-progress-linear>
     <v-btn tile height="1.5em" color="secondary">変更</v-btn>
@@ -15,12 +15,21 @@
 </template>
 <script lang="ts">
 import { CharacterParameter } from '@/types/statusBoard';
-import { defineComponent, PropType } from '@vue/composition-api';
+import { defineComponent, PropType, computed } from '@vue/composition-api';
 
 export default defineComponent({
   
   props: {
     parameter: { type: Object as PropType<CharacterParameter>, required: true }
+  },
+
+  setup (props) {
+
+    const parcentage = computed(() => props.parameter.max === 0 ? 0 : Math.ceil(props.parameter.current / props.parameter.max * 100));
+
+    return {
+      parcentage
+    };
   }
 });
 </script>

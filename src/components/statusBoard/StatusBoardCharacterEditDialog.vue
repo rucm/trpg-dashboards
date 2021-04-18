@@ -1,5 +1,5 @@
 <template>
-  <v-dialog @input="input" :value="value" max-width="300">
+  <v-dialog @input="input" :value="value" max-width="400">
     <v-card>
 
       <v-card-title>編集</v-card-title>
