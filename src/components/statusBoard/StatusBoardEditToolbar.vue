@@ -12,15 +12,9 @@ import { StatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/sta
 export default defineComponent({
 
   setup () {
-
     const store = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
-
-    const create = async () => {
-      await store.create('新規キャラクター');
-    }
-
     return {
-      create
+      create: async () => { await store.create('新規キャラクター'); }
     };
   }
 });
