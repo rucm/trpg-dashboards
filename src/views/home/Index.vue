@@ -4,12 +4,12 @@
       <td-col md="10">
         <home-header :title="appConfig.headers.tool" ></home-header>
       </td-col>
-      <td-col md="5" v-for="tool in appConfig.tools" :key="tool.id">
-        <home-tool-card 
-          :title="tool.name"
-          :content="tool.content"
-          :link="tool.link"
-        ></home-tool-card>
+      <td-col md="10">
+        <td-row justify-md="start" class="pa-0">
+          <td-col md="6" v-for="tool in appConfig.tools" :key="tool.id" class="pa-0">
+            <home-tool-card :title="tool.name" :content="tool.content" :link="tool.link"></home-tool-card>
+          </td-col>
+        </td-row>
       </td-col>
     </td-row>
   </td-container>

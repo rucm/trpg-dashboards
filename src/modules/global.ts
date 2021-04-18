@@ -10,12 +10,6 @@ export const useGlobalModule = () => {
           name: 'ステータスボード',
           content: 'キャラクターのステータスを管理するツールです。',
           link: '/statusboard'
-        },
-        {
-          id: 'statusBoard2',
-          name: 'ステータスボード',
-          content: 'キャラクターのステータスを管理するツールです。',
-          link: '/statusboard'
         }
       ],
       title: 'TRPG Dashboard',
