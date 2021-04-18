@@ -1,19 +1,24 @@
 <template>
-  <td-row>
-    <status-board-edit-toolbar></status-board-edit-toolbar>
-    <td-col :md="10" class="pa-0">
-      <td-row justify-md="start" class="pa-0">
-        <td-col :md="6" v-for="character in characters" :key="character.id">
-          <status-board-character :character="character"></status-board-character>
-        </td-col>
-      </td-row>
-    </td-col>
-  </td-row>
+  <td-container>
+    <td-row>
+      <td-col md="10">
+        <status-board-edit-toolbar></status-board-edit-toolbar>
+      </td-col>
+      <td-col md="10" class="pa-0">
+        <td-row justify-md="start" class="pa-0">
+          <td-col md="6" v-for="character in characters" :key="character.id">
+            <status-board-character :character="character"></status-board-character>
+          </td-col>
+        </td-row>
+      </td-col>
+    </td-row>
+  </td-container>
 </template>
 <script lang="ts">
 import { defineComponent, provide, SetupContext, onMounted, onBeforeUnmount } from '@vue/composition-api';
 import { useStatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/statusBoard/store';
 import { useStatusBoardRoomModule } from '@/modules/statusBoard/room';
+import TdContainer from '@/layouts/TdContainer.vue';
 import TdRow from '@/layouts/TdRow.vue';
 import TdCol from '@/layouts/TdCol.vue';
 import StatusBoardCharacter from '@/components/statusBoard/StatusBoardCharacter.vue';
@@ -21,7 +26,7 @@ import StatusBoardEditToolbar from '@/components/statusBoard/StatusBoardEditTool
 
 export default defineComponent({
 
-  components: { TdRow, TdCol, StatusBoardCharacter, StatusBoardEditToolbar },
+  components: { TdContainer, TdRow, TdCol, StatusBoardCharacter, StatusBoardEditToolbar },
 
   setup (props: {}, ctx: SetupContext) {
 

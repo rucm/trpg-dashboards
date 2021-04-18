@@ -9,9 +9,9 @@ import { PropType, defineComponent } from '@vue/composition-api';
 export default defineComponent({
 
   props: {
-    cols: { type: Number as PropType<number>, required: false, default: 11 },
-    md: { type: Number as PropType<number>, required: false, default: 8 },
-    sm: { type: Number as PropType<number>, required: false, default: 10 }
+    cols: { type: String as PropType<string>, required: false, default: '11' },
+    md: { type: String as PropType<string>, required: false, default: '8' },
+    sm: { type: String as PropType<string>, required: false, default: '10' }
   }
 });
 </script>
