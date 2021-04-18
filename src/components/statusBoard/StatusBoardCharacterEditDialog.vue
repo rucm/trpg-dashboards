@@ -28,8 +28,8 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn text @click="done" color="primary">完了</v-btn>
-        <v-btn text @click="input(false)">キャンセル</v-btn>
+        <v-btn text min-width="100" @click="done" color="primary">完了</v-btn>
+        <v-btn text min-width="100" @click="input(false)">キャンセル</v-btn>
       </v-card-actions>
 
     </v-card>
