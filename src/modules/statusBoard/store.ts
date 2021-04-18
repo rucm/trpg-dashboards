@@ -61,11 +61,10 @@ export const useStatusBoardStoreModule = () => {
 
   async function create (name: string): Promise<void> {
     const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
+
     await roomRef.collection('characters').add({
       name: name,
-      parts: [
-        { name: '本体', parameters: characterTemplate.createCharacterParameters(state.room.template) }
-      ],
+      parts: [characterTemplate.createPart(state.room.template, '本体')],
       order: Math.max(...state.characters.map(c => c.order), 0) + 1
     });
   }
