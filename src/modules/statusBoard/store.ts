@@ -31,7 +31,7 @@ export const useStatusBoardStoreModule = () => {
           state.characters.push({
             id: change.doc.id,
             name: data.name,
-            parameters: data.parameters,
+            parts: data.parts,
             order: data.order
           });
         }
@@ -41,7 +41,7 @@ export const useStatusBoardStoreModule = () => {
           if (!character) return;
           const data = change.doc.data() as Character;
           character.name = data.name;
-          character.parameters = data.parameters;
+          character.parts = data.parts;
           character.order = data.order;
         }
 
@@ -63,7 +63,9 @@ export const useStatusBoardStoreModule = () => {
     const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
     await roomRef.collection('characters').add({
       name: name,
-      parameters: characterTemplate.createCharacterParameters(state.room.template),
+      parts: [
+        { name: '本体', parameters: characterTemplate.createCharacterParameters(state.room.template) }
+      ],
       order: Math.max(...state.characters.map(c => c.order), 0) + 1
     });
   }
@@ -81,7 +83,7 @@ export const useStatusBoardStoreModule = () => {
     if (!(await characterRef.get()).exists) return;
     await characterRef.update({
       name: character.name,
-      parameters: character.parameters,
+      parts: character.parts,
       order: character.order
     });
   }

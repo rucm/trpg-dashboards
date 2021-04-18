@@ -9,10 +9,15 @@ export type CharacterParameter = {
   color: string,
 };
 
+export type CharacterPart = {
+  name: string,
+  parameters: Array<CharacterParameter>,
+};
+
 export type Character = {
   id: string,
   name: string,
-  parameters: Array<CharacterParameter>
+  parts: Array<CharacterPart>
   order: number
 };
 

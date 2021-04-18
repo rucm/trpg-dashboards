@@ -3,11 +3,9 @@
     <status-board-edit-toolbar></status-board-edit-toolbar>
     <td-col :md="10" class="pa-0">
       <td-row justify-md="start" class="pa-0">
-        <status-board-character
-          v-for="character in characters"
-          :key="character.id"
-          :character="character"
-        ></status-board-character>
+        <td-col :md="6" v-for="character in characters" :key="character.id">
+          <status-board-character :character="character"></status-board-character>
+        </td-col>
       </td-row>
     </td-col>
   </td-row>
