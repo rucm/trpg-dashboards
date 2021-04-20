@@ -7,12 +7,12 @@
       <v-card-text>
         <v-row class="pa-0">
           <v-col class="pt-0 pb-0" cols="12">
-            <v-text-field v-model="editCharacter.name" label="キャラクター名"></v-text-field>
+            <v-text-field v-model="localState.character.name" label="キャラクター名"></v-text-field>
           </v-col>
-          <v-col class="pt-0 pb-0" cols="12" v-for="part in editCharacter.parts" :key="part.id">
+          <v-col class="pt-0 pb-0" cols="12" v-for="(part, index) in localState.character.parts" :key="part.id">
             <v-row class="pt-0 pb-0">
               <v-col class="pt-0 pb-0" cols="4">
-                <v-text-field label="部位" v-model="part.name"></v-text-field>
+                <v-text-field label="部位" v-model="part.name" :readonly="index < 1"></v-text-field>
               </v-col>
               <v-col class="pt-0 pb-0" cols="8">
                 <v-row class="pt-0 pb-0">
@@ -23,6 +23,12 @@
               </v-col>
             </v-row>
           </v-col>
+          <!-- <v-col class="pt-0 pb-0" cols="12">
+            <v-btn text @click="add">
+              <v-icon>mdi-plus</v-icon>
+              <span>部位追加</span>
+            </v-btn>
+          </v-col> -->
         </v-row>
       </v-card-text>
 
@@ -36,8 +42,10 @@
   </v-dialog>
 </template>
 <script lang="ts">
-import { Character } from '@/types/statusBoard';
-import { defineComponent, reactive, SetupContext, PropType } from '@vue/composition-api';
+import { StatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/statusBoard/store';
+import { useStatusBoardTemplateModule } from '@/modules/statusBoard/template';
+import { Character, CharacterPart } from '@/types/statusBoard';
+import { defineComponent, reactive, SetupContext, PropType, inject, watch } from '@vue/composition-api';
 
 export default defineComponent({
 
@@ -48,26 +56,45 @@ export default defineComponent({
 
   setup (props, ctx: SetupContext) {
 
-    const editCharacter = reactive<Character>({
-      id: props.character.id,
-      name: props.character.name,
-      parts: JSON.parse(JSON.stringify(props.character.parts)),
-      order: props.character.order
+    const { room } = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
+    const template = useStatusBoardTemplateModule();
+
+    function initCharacter (): Character {
+      return {
+        id: props.character.id,
+        name: props.character.name,
+        parts: JSON.parse(JSON.stringify(props.character.parts)) as Array<CharacterPart>,
+        order: props.character.order
+      };
+    }
+
+    const localState = reactive({
+      character: initCharacter()
     });
 
-    function input (value: boolean) {
+    watch(() => props.value, showDialog => {
+      if (!showDialog) return;
+      localState.character = initCharacter();
+    });
+
+    function input (value: boolean): void {
       ctx.emit('input', value);
     }
 
-    function done () {
-      ctx.emit('done', editCharacter);
+    function done (): void {
+      ctx.emit('done', localState.character);
       input(false);
     }
 
+    function add (): void {
+      localState.character.parts.push(template.createPart(room.value.template));
+    }
+
     return {
-      editCharacter,
+      localState,
       input,
-      done
+      done,
+      add
     }
   }
 });
