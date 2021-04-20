@@ -10,7 +10,9 @@
         <div>{{ parameter.current }} / {{ parameter.max }}</div>
       </template>
     </v-progress-linear>
-    <v-btn tile height="1.5em" color="secondary">変更</v-btn>
+    <v-btn tile height="1.5em" color="secondary">
+      <v-icon>mdi-swap-vertical-bold</v-icon>
+    </v-btn>
   </div>
 </template>
 <script lang="ts">

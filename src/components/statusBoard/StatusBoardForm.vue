@@ -11,7 +11,7 @@
           <v-btn color="secondary" block @click="form.submitCreate">新規作成</v-btn>
         </v-col>
         <v-col cols="12" md="6" sm="6">
-          <v-btn color="accent" block @click="form.submitEnter">入室</v-btn>
+          <v-btn color="primary" block @click="form.submitEnter">入室</v-btn>
         </v-col>
       </v-row>
     </v-card-actions>
