@@ -10,14 +10,14 @@
         <div>{{ parameter.current }} / {{ parameter.max }}</div>
       </template>
     </v-progress-linear>
-    <v-btn tile height="1.5em" color="secondary">
+    <v-btn tile height="1.5em" color="secondary" @click="select">
       <v-icon>mdi-swap-vertical-bold</v-icon>
     </v-btn>
   </div>
 </template>
 <script lang="ts">
 import { CharacterParameter } from '@/types/statusBoard';
-import { defineComponent, PropType, computed } from '@vue/composition-api';
+import { defineComponent, PropType, computed, SetupContext } from '@vue/composition-api';
 
 export default defineComponent({
   
@@ -25,12 +25,17 @@ export default defineComponent({
     parameter: { type: Object as PropType<CharacterParameter>, required: true }
   },
 
-  setup (props) {
+  setup (props, ctx: SetupContext) {
 
     const parcentage = computed(() => props.parameter.max === 0 ? 0 : Math.ceil(props.parameter.current / props.parameter.max * 100));
 
+    function select (): void {
+      ctx.emit('select', props.parameter.name);
+    }
+
     return {
-      parcentage
+      parcentage,
+      select
     };
   }
 });

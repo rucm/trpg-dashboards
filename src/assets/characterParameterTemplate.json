@@ -1,44 +1,56 @@
 {
-    "sw": [
-      {
-        "name": "HP",
-        "current": 0,
-        "max": 0,
-        "color": "#EF5350"
-      },
-      {
-        "name": "MP",
-        "current": 0,
-        "max": 0,
-        "color": "#29B6F6"
-      }
-    ],
-    "goblinSlayer": [
-      {
-        "name": "生命力×2",
-        "current": 0,
-        "max": 0,
-        "color": "#EF5350"
-      },
-      {
-        "name": "魔法回数",
-        "current": 0,
-        "max": 0,
-        "color": "#29B6F6"
-      }
-    ],
-    "default": [
-      {
-        "name": "HP",
-        "current": 0,
-        "max": 0,
-        "color": "#EF5350"
-      },
-      {
-        "name": "MP",
-        "current": 0,
-        "max": 0,
-        "color": "#29B6F6"
-      }
-    ]
-  }
+  "sw": [
+    {
+      "partId": "",
+      "id": "",
+      "name": "HP",
+      "current": 0,
+      "max": 0,
+      "color": "#EF5350"
+    },
+    {
+      "partId": "",
+      "id": "",
+      "name": "MP",
+      "current": 0,
+      "max": 0,
+      "color": "#29B6F6"
+    }
+  ],
+  "goblinSlayer": [
+    {
+      "partId": "",
+      "id": "",
+      "name": "生命力×2",
+      "current": 0,
+      "max": 0,
+      "color": "#EF5350"
+    },
+    {
+      "partId": "",
+      "id": "",
+      "name": "魔法回数",
+      "current": 0,
+      "max": 0,
+      "color": "#29B6F6"
+    }
+  ],
+  "default": [
+    {
+      "partId": "",
+      "id": "",
+      "name": "HP",
+      "current": 0,
+      "max": 0,
+      "color": "#EF5350"
+    },
+    {
+      "partId": "",
+      "id": "",
+      "name": "MP",
+      "current": 0,
+      "max": 0,
+      "color": "#29B6F6"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { ref, reactive, computed, InjectionKey } from '@vue/composition-api';
-import { Room, State, Character } from '@/types/statusBoard';
+import { Room, State, Character, CharacterPart, CharacterParameter } from '@/types/statusBoard';
 import { firestore } from '@/plugins/firebase';
 import { useStatusBoardTemplateModule } from '@/modules/statusBoard/template';
 
@@ -59,25 +59,27 @@ export const useStatusBoardStoreModule = () => {
     unsubscribeListener.value();
   }
 
-  async function create (name: string): Promise<void> {
+  async function createCharacter (name: string): Promise<void> {
     const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
-
+    if (!(await roomRef.get()).exists) return;
     await roomRef.collection('characters').add({
       name: name,
       parts: [characterTemplate.createPart(state.room.template, '本体')],
       order: Math.max(...state.characters.map(c => c.order), 0) + 1
     });
   }
-
-  async function remove (characterId: string): Promise<void> {
+  
+  async function removeCharacter (characterId: string): Promise<void> {
     const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
+    if (!(await roomRef.get()).exists) return;
     const characterRef = roomRef.collection('characters').doc(characterId);
     if (!(await characterRef.get()).exists) return;
     await characterRef.delete();
   }
   
-  async function update (character: Character): Promise<void> {
+  async function updateCharacter (character: Character): Promise<void> {
     const roomRef = firestore.collection('statusBoardRooms').doc(state.room.roomId);
+    if (!(await roomRef.get()).exists) return;
     const characterRef = roomRef.collection('characters').doc(character.id);
     if (!(await characterRef.get()).exists) return;
     await characterRef.update({
@@ -87,15 +89,42 @@ export const useStatusBoardStoreModule = () => {
     });
   }
 
+  async function createCharacterPart (characterId: string, name: string): Promise<void> {
+    const character = state.characters.find(c => c.id === characterId);
+    if (!character || character.parts.find(c => c.name === name)) return;
+    const part = characterTemplate.createPart(state.room.template, name);
+    character.parts.push(part);
+    await updateCharacter(character);
+  }
+  
+  async function removeCharacterPart (characterId: string, partId: string): Promise<void> {
+    const character = state.characters.find(c => c.id === characterId);
+    if (!character) return;
+    character.parts = character.parts.filter(c => c.id !== partId);
+    await updateCharacter(character);
+  }
+  
+  async function updateCharacterPart (characterId: string, characterPart: CharacterPart): Promise<void> {
+    const character = state.characters.find(c => c.id === characterId);
+    if (!character) return;
+    const part = character.parts.find(p => p.id === characterPart.id);
+    if (!part) return;
+    part.name = characterPart.name;
+    await updateCharacter(character);
+  }
+
   return {
     room: computed(() => state.room),
     characters: computed(() => state.characters),
     initialize,
     subscribe,
     unsubscribe,
-    create,
-    remove,
-    update
+    createCharacter,
+    removeCharacter,
+    updateCharacter,
+    createCharacterPart,
+    removeCharacterPart,
+    updateCharacterPart
   };
 };
 

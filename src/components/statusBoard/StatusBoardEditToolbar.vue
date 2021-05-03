@@ -14,7 +14,7 @@ export default defineComponent({
   setup () {
     const store = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
     return {
-      create: async () => { await store.create('新規キャラクター'); }
+      create: async () => { await store.createCharacter('新規キャラクター'); }
     };
   }
 });

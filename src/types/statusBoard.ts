@@ -5,18 +5,19 @@ export type CharacterParameter = {
   name: string,
   current: number,
   max: number,
-  color: string,
+  color: string
 };
 
 export type CharacterPart = {
-  name: string,
-  parameters: Array<CharacterParameter>,
+  id: string,
+  name: string
+  parameters: Array<CharacterParameter>
 };
 
 export type Character = {
   id: string,
   name: string,
-  parts: Array<CharacterPart>
+  parts: Array<CharacterPart>,
   order: number
 };
 
