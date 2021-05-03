@@ -1,7 +1,34 @@
 <template>
   <v-bottom-sheet @input="input" :value="value">
     <v-card tile height="200">
-      <v-card-title>{{ localState.selectParameter.name }}</v-card-title>
+      <v-card-title>
+        <span>パラメータ変更</span>
+        <span>（{{ localState.selectParameter.name }}）</span>
+      </v-card-title>
+      <v-card-text class="pt-0 pb-0">
+        <v-row class="pa-0" justify="center">
+          <v-col class="pa-0" cols="2" md="1" align-self="center">
+            <v-btn tile small block color="secondary" @click="sub(10)">-10</v-btn>
+          </v-col>
+          <v-col class="pa-0 pl-1" cols="2" md="1" align-self="center">
+            <v-btn tile small block color="secondary" @click="sub(1)">-1</v-btn>
+          </v-col>
+          <v-col class="pt-0 pb-0" cols="4" md="2" align-self="center">
+            <v-text-field type="number" v-model="localState.selectParameter.current"></v-text-field>
+          </v-col>
+          <v-col class="pa-0 pr-1" cols="2" md="1" align-self="center">
+            <v-btn tile small block color="secondary" @click="add(1)">+1</v-btn>
+          </v-col>
+          <v-col class="pa-0" cols="2" md="1" align-self="center">
+            <v-btn tile small block color="secondary" @click="add(10)">+10</v-btn>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn text min-width="100" @click="done" color="primary">完了</v-btn>
+        <v-btn text min-width="100" @click="input(false)">キャンセル</v-btn>
+      </v-card-actions>
     </v-card>
   </v-bottom-sheet>
 </template>
@@ -49,10 +76,22 @@ export default defineComponent({
       ctx.emit('done', localState.selectParameter);
     }
 
+    function add (value: number): void {
+      if (localState.selectParameter.name === 'NO DATA') return;
+      localState.selectParameter.current += value;
+    }
+
+    function sub (value: number): void {
+      if (localState.selectParameter.name === 'NO DATA') return;
+      localState.selectParameter.current -= value;
+    }
+
     return {
       localState,
       input,
-      done
+      done,
+      add,
+      sub
     };
   }
 });

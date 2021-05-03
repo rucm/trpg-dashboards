@@ -38,15 +38,7 @@ export default defineComponent({
       selectParameter: ''
     });
 
-    const { updateCharacterPart } = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
-
-    function initPart (): CharacterPart {
-      return {
-        id: props.part.id,
-        name: props.part.name,
-        parameters: JSON.parse(JSON.stringify(props.part.parameters))
-      };
-    }
+    const store = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
 
     function select (name: string): void {
       localState.editDialog = true;
@@ -54,11 +46,15 @@ export default defineComponent({
     }
 
     async function done (editParameter: CharacterParameter): Promise<void> {
-      const part = initPart();
+      const part = {
+        id: props.part.id,
+        name: props.part.name,
+        parameters: JSON.parse(JSON.stringify(props.part.parameters)) as Array<CharacterParameter>
+      };
       const parameter = part.parameters.find(p => p.name === editParameter.name);
       if (!parameter) return;
       parameter.current = editParameter.current;
-      await updateCharacterPart(props.characterId, part);
+      await store.updateCharacterPart(props.characterId, part);
     }
 
     return {

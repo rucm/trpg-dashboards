@@ -1,5 +1,5 @@
 import { ref, reactive, computed, InjectionKey } from '@vue/composition-api';
-import { Room, State, Character, CharacterPart, CharacterParameter } from '@/types/statusBoard';
+import { Room, State, Character, CharacterPart } from '@/types/statusBoard';
 import { firestore } from '@/plugins/firebase';
 import { useStatusBoardTemplateModule } from '@/modules/statusBoard/template';
 
@@ -110,6 +110,7 @@ export const useStatusBoardStoreModule = () => {
     const part = character.parts.find(p => p.id === characterPart.id);
     if (!part) return;
     part.name = characterPart.name;
+    part.parameters = characterPart.parameters;
     await updateCharacter(character);
   }
 

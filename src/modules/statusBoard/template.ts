@@ -5,10 +5,9 @@ import templateData from '@/assets/characterParameterTemplate.json';
 export const useStatusBoardTemplateModule = () => {
 
   function createParameters (template: TemplateType): Array<CharacterParameter> {
-    let parameters = templateData.default;
-    if (template === 'sw') parameters = templateData.sw;
-    if (template === 'goblinSlayer') parameters = templateData.goblinSlayer;
-    return parameters;
+    if (template === 'sw') return JSON.parse(JSON.stringify(templateData.sw));
+    if (template === 'goblinSlayer') return JSON.parse(JSON.stringify(templateData.goblinSlayer));
+    return JSON.parse(JSON.stringify(templateData.default));
   }
 
   function createPart (template: TemplateType, name?: string): CharacterPart {
