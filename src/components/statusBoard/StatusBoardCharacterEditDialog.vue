@@ -47,6 +47,7 @@
   </v-dialog>
 </template>
 <script lang="ts">
+import { useStatusBoardCharacterModule } from '@/modules/statusBoard/character';
 import { StatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/statusBoard/store';
 import { useStatusBoardTemplateModule } from '@/modules/statusBoard/template';
 import { Character, CharacterPart } from '@/types/statusBoard';
@@ -62,24 +63,16 @@ export default defineComponent({
   setup (props, ctx: SetupContext) {
 
     const { room } = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
+    const characterModule = useStatusBoardCharacterModule();
     const template = useStatusBoardTemplateModule();
 
-    function initCharacter (): Character {
-      return {
-        id: props.character.id,
-        name: props.character.name,
-        parts: JSON.parse(JSON.stringify(props.character.parts)) as Array<CharacterPart>,
-        order: props.character.order
-      };
-    }
-
     const localState = reactive({
-      character: initCharacter()
+      character: characterModule.copyCharacter(props.character)
     });
 
     watch(() => props.value, showDialog => {
       if (!showDialog) return;
-      localState.character = initCharacter();
+      localState.character = characterModule.copyCharacter(props.character);
     });
 
     function input (value: boolean): void {

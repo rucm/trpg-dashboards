@@ -2,7 +2,7 @@
   <v-toolbar dense flat>
     <v-toolbar-title>ステータスボード</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn color="secondary" @click="create">新規作成</v-btn>
+    <v-btn tile small color="secondary" @click="create">新規作成</v-btn>
   </v-toolbar>
 </template>
 <script lang="ts">

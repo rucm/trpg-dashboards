@@ -3,24 +3,31 @@
     <v-card tile height="200">
       <v-card-title>
         <span>パラメータ変更</span>
-        <span>（{{ localState.selectParameter.name }}）</span>
+        <span>（{{ localState.parameter.name }}）</span>
       </v-card-title>
       <v-card-text class="pt-0 pb-0">
         <v-row class="pa-0" justify="center">
-          <v-col class="pa-0" cols="2" md="1" align-self="center">
-            <v-btn tile small block color="secondary" @click="sub(10)">-10</v-btn>
+          <v-col cols="12" class="pt-0 pb-0">
+            <v-row class="pa-0" justify="center">
+              <v-col class="pa-0" cols="2" md="1" align-self="center">
+                <v-btn tile small block color="secondary" @click="sub(10)">-10</v-btn>
+              </v-col>
+              <v-col class="pa-0 pl-1" cols="2" md="1" align-self="center">
+                <v-btn tile small block color="secondary" @click="sub(1)">-1</v-btn>
+              </v-col>
+              <v-col class="pt-0 pb-0" cols="4" md="2" align-self="center">
+                <v-text-field height="1.5em" type="number" v-model="localState.parameter.current"></v-text-field>
+              </v-col>
+              <v-col class="pa-0 pr-1" cols="2" md="1" align-self="center">
+                <v-btn tile small block color="secondary" @click="add(1)">+1</v-btn>
+              </v-col>
+              <v-col class="pa-0" cols="2" md="1" align-self="center">
+                <v-btn tile small block color="secondary" @click="add(10)">+10</v-btn>
+              </v-col>
+            </v-row>
           </v-col>
-          <v-col class="pa-0 pl-1" cols="2" md="1" align-self="center">
-            <v-btn tile small block color="secondary" @click="sub(1)">-1</v-btn>
-          </v-col>
-          <v-col class="pt-0 pb-0" cols="4" md="2" align-self="center">
-            <v-text-field type="number" v-model="localState.selectParameter.current"></v-text-field>
-          </v-col>
-          <v-col class="pa-0 pr-1" cols="2" md="1" align-self="center">
-            <v-btn tile small block color="secondary" @click="add(1)">+1</v-btn>
-          </v-col>
-          <v-col class="pa-0" cols="2" md="1" align-self="center">
-            <v-btn tile small block color="secondary" @click="add(10)">+10</v-btn>
+          <v-col cols="12" md="6" class="pa-0 text-center">
+            <v-btn tile small color="secondary" @click="reset">最大値に合わせる</v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -33,6 +40,7 @@
   </v-bottom-sheet>
 </template>
 <script lang="ts">
+import { useStatusBoardCharacterModule } from '@/modules/statusBoard/character';
 import { CharacterParameter, CharacterPart } from '@/types/statusBoard';
 import { defineComponent, PropType, reactive, SetupContext, watch } from '@vue/composition-api';
 
@@ -46,24 +54,21 @@ export default defineComponent({
 
   setup (props, ctx: SetupContext) {
 
+    const characterModule = useStatusBoardCharacterModule();
+
     function initParameter (): CharacterParameter {
       const parameter = props.part.parameters.find(p => p.name === props.select);
       if (!parameter) return { current: 0, max: 0, color: '', name: 'NO DATA' };
-      return {
-        name: parameter.name,
-        current: parameter.current,
-        max: parameter.max,
-        color: parameter.color
-      };
+      return characterModule.copyParameter(parameter);
     }
 
     const localState = reactive({
-      selectParameter: initParameter()
+      parameter: initParameter()
     });
 
     watch(() => props.value, showDialog => {
       if (!showDialog) return;
-      localState.selectParameter = initParameter()
+      localState.parameter = initParameter()
     });
 
     function input (value: boolean): void {
@@ -71,19 +76,24 @@ export default defineComponent({
     }
 
     function done (): void {
-      if (localState.selectParameter.name === 'NO DATA') return;
+      if (localState.parameter.name === 'NO DATA') return;
       input(false);
-      ctx.emit('done', localState.selectParameter);
+      ctx.emit('done', localState.parameter);
     }
 
     function add (value: number): void {
-      if (localState.selectParameter.name === 'NO DATA') return;
-      localState.selectParameter.current += value;
+      if (localState.parameter.name === 'NO DATA') return;
+      localState.parameter.current += value;
     }
 
     function sub (value: number): void {
-      if (localState.selectParameter.name === 'NO DATA') return;
-      localState.selectParameter.current -= value;
+      if (localState.parameter.name === 'NO DATA') return;
+      localState.parameter.current -= value;
+    }
+
+    function reset (): void {
+      if (localState.parameter.name === 'NO DATA') return;
+      localState.parameter.current = localState.parameter.max;
     }
 
     return {
@@ -91,7 +101,8 @@ export default defineComponent({
       input,
       done,
       add,
-      sub
+      sub,
+      reset
     };
   }
 });

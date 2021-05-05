@@ -21,6 +21,7 @@ import { StatusBoardStoreModuleKey, StatusBoardStoreModule } from '@/modules/sta
 import { defineComponent, PropType, inject, reactive } from '@vue/composition-api';
 import StatusBoardCharacterParameter from '@/components/statusBoard/StatusBoardCharacterParameter.vue';
 import StatusBoardCharacterPartDialog from '@/components/statusBoard/StatusBoardCharacterPartDialog.vue';
+import { useStatusBoardCharacterModule } from '@/modules/statusBoard/character';
 
 export default defineComponent({
 
@@ -38,7 +39,8 @@ export default defineComponent({
       selectParameter: ''
     });
 
-    const store = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
+    const { updateCharacterPart } = inject(StatusBoardStoreModuleKey) as StatusBoardStoreModule;
+    const characterModule = useStatusBoardCharacterModule();
 
     function select (name: string): void {
       localState.editDialog = true;
@@ -46,15 +48,11 @@ export default defineComponent({
     }
 
     async function done (editParameter: CharacterParameter): Promise<void> {
-      const part = {
-        id: props.part.id,
-        name: props.part.name,
-        parameters: JSON.parse(JSON.stringify(props.part.parameters)) as Array<CharacterParameter>
-      };
+      const part = characterModule.copyPart(props.part);
       const parameter = part.parameters.find(p => p.name === editParameter.name);
       if (!parameter) return;
       parameter.current = editParameter.current;
-      await store.updateCharacterPart(props.characterId, part);
+      await updateCharacterPart(props.characterId, part);
     }
 
     return {
