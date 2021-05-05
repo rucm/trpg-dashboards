@@ -26,8 +26,12 @@
               </v-col>
             </v-row>
           </v-col>
-          <v-col cols="12" md="6" class="pa-0 text-center">
-            <v-btn tile small color="secondary" @click="reset">最大値に合わせる</v-btn>
+          <v-col cols="12" class="pa-0">
+            <v-row class="pa-0" justify="center">
+              <v-col class="pa-0 text-center" cols="4" md="2">
+                <v-btn tile small block color="secondary" @click="reset">最大値に合わせる</v-btn>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </v-card-text>
