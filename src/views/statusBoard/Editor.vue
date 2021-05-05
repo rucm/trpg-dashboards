@@ -1,45 +1,55 @@
 <template>
-  <status-board-container>
-    <status-board-tool-bar></status-board-tool-bar>
-    <status-board-card-group
-      v-for="(group, index) in state.groups"
-      :key="index"
-      :cardGroupIndex="index"
-    ></status-board-card-group>
-  </status-board-container>
+  <td-container>
+    <td-row>
+      <td-col md="10" class="pa-0">
+        <status-board-edit-toolbar></status-board-edit-toolbar>
+      </td-col>
+      <td-col md="10" class="pa-0">
+        <td-row justify-md="start" class="pa-0">
+          <td-col md="6" v-for="character in characters" :key="character.id">
+            <status-board-character :character="character"></status-board-character>
+          </td-col>
+        </td-row>
+      </td-col>
+    </td-row>
+  </td-container>
 </template>
 <script lang="ts">
 import { defineComponent, provide, SetupContext, onMounted, onBeforeUnmount } from '@vue/composition-api';
-import StatusBoardContainer from '@/components/statusBoard/common/StatusBoardContainer.vue';
-import StatusBoardToolBar from '@/components/statusBoard/editor/StatusBoardToolBar.vue';
-import StatusBoardCardGroup from '@/components/statusBoard/editor/StatusBoardCardGroup.vue';
-import { useStatusBoardModule, StatusBoardModuleKey } from '@/modules/statusBoard/editor';
+import { useStatusBoardStoreModule, StatusBoardStoreModuleKey } from '@/modules/statusBoard/store';
+import { useStatusBoardRoomModule } from '@/modules/statusBoard/room';
+import TdContainer from '@/layouts/TdContainer.vue';
+import TdRow from '@/layouts/TdRow.vue';
+import TdCol from '@/layouts/TdCol.vue';
+import StatusBoardCharacter from '@/components/statusBoard/StatusBoardCharacter.vue';
+import StatusBoardEditToolbar from '@/components/statusBoard/StatusBoardEditToolbar.vue';
 
 export default defineComponent({
 
-  components: { StatusBoardContainer, StatusBoardToolBar, StatusBoardCardGroup },
+  components: { TdContainer, TdRow, TdCol, StatusBoardCharacter, StatusBoardEditToolbar },
 
   setup (props: {}, ctx: SetupContext) {
-    const statusBoardModule = useStatusBoardModule();
-    provide(StatusBoardModuleKey, statusBoardModule);
+
+    const storeModule = useStatusBoardStoreModule();
+    const roomModule = useStatusBoardRoomModule();
+    provide(StatusBoardStoreModuleKey, storeModule);
 
     onMounted(async () => {
-      const roomId = ctx.root.$route.params['roomId'] as string;
-      const result = await statusBoardModule.fetchRoomData(roomId);
-      if (!result) ctx.root.$router.push('/statusboard');
-
-      statusBoardModule.subscribe();
-      console.log('subscribe');
+      const room = await roomModule.fetch(ctx.root.$route.params['roomId'] as string);
+      if (!room.roomId) {
+        ctx.root.$router.push('/statusboard');
+        return;
+      }
+      storeModule.initialize(room);
+      storeModule.subscribe();
     });
 
     onBeforeUnmount(() => {
-      statusBoardModule.unsubscribe();
-    })
-
-    const state = statusBoardModule.state;
+      storeModule.unsubscribe();
+    });
 
     return {
-      state
+      characters: storeModule.characters
     };
   }
 });

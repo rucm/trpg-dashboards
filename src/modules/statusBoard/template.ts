@@ -1,26 +1,25 @@
-import { Card, CardGroup, CardItem } from '@/types/statusBoardType';
+import { v4 as uuidv4 } from 'uuid';
+import { TemplateType, CharacterParameter, CharacterPart } from '@/types/statusBoard';
+import templateData from '@/assets/characterParameterTemplate.json';
 
-export const useEmptyCardTemplate = () => {
+export const useStatusBoardTemplateModule = () => {
 
-  function createEmptyCardItems (template: string): Array<CardItem> {
-    if (template === 'sw') {
-      return [ { label: 'HP', current: 0, max: 0, color: '#ef5350' }, { label: 'MP', current: 0, max: 0, color: '#29B6F6' } ];
-    }
-
-    return [ { label: 'HP', current: 0, max: 0, color: '#ef5350' } ];
+  function createParameters (template: TemplateType): Array<CharacterParameter> {
+    if (template === 'sw') return JSON.parse(JSON.stringify(templateData.sw));
+    if (template === 'goblinSlayer') return JSON.parse(JSON.stringify(templateData.goblinSlayer));
+    return JSON.parse(JSON.stringify(templateData.default));
   }
 
-  function createEmptyCard (template: string): Card {
-    return { name: '本体', items: createEmptyCardItems(template) };
-  }
-
-  function createEmptyCardGroup (template: string): CardGroup {
-    return { name: 'キャラクター', cards: [createEmptyCard(template)] };
+  function createPart (template: TemplateType, name?: string): CharacterPart {
+    return {
+      id: uuidv4(),
+      name: !name ? '新規部位' : name,
+      parameters: createParameters(template)
+    };
   }
 
   return {
-    createEmptyCardItems,
-    createEmptyCard,
-    createEmptyCardGroup
-  }
+    createParameters,
+    createPart
+  };
 };

@@ -1,21 +1,25 @@
 <template>
-  <status-board-container>
-    <status-board-form></status-board-form>
-  </status-board-container>
+  <td-container>
+    <td-row>
+      <td-col md="5" sm="8">
+        <status-board-form></status-board-form>
+      </td-col>
+    </td-row>
+  </td-container>
 </template>
 <script lang="ts">
-import { defineComponent, provide } from '@vue/composition-api';
-import StatusBoardContainer from '@/components/statusBoard/common/StatusBoardContainer.vue';
-import StatusBoardForm from '@/components/statusBoard/form/StatusBoardForm.vue';
-import { useStatusBoardFormModule, StatusBoardFormModuleKey } from '@/modules/statusBoard/form';
-
+import TdContainer from '@/layouts/TdContainer.vue';
+import TdRow from '@/layouts/TdRow.vue';
+import TdCol from '@/layouts/TdCol.vue';
+import StatusBoardForm from '@/components/statusBoard/StatusBoardForm.vue';
+import { defineComponent } from '@vue/composition-api';
 
 export default defineComponent({
-
-  components: { StatusBoardContainer, StatusBoardForm },
-
-  setup () {
-    provide(StatusBoardFormModuleKey, useStatusBoardFormModule());
+  components: { 
+    TdContainer,
+    TdRow,
+    TdCol,
+    StatusBoardForm
   }
 });
 </script>
