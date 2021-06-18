@@ -2,7 +2,7 @@
   <v-bottom-sheet @input="input" :value="value">
     <v-card tile height="200">
       <v-card-title>
-        <span>パラメータ変更</span>
+        <span>値入力</span>
         <span>（{{ localState.parameter.name }}）</span>
       </v-card-title>
       <v-card-text class="pt-0 pb-0">
@@ -16,7 +16,7 @@
                 <v-btn tile small block color="secondary" @click="sub(1)">-1</v-btn>
               </v-col>
               <v-col class="pt-0 pb-0" cols="4" md="2" align-self="center">
-                <v-text-field height="1.5em" type="number" v-model="localState.parameter.current"></v-text-field>
+                <v-text-field height="1.5em" type="number" v-model="localState.value"></v-text-field>
               </v-col>
               <v-col class="pa-0 pr-1" cols="2" md="1" align-self="center">
                 <v-btn tile small block color="secondary" @click="add(1)">+1</v-btn>
@@ -67,12 +67,14 @@ export default defineComponent({
     }
 
     const localState = reactive({
-      parameter: initParameter()
+      parameter: initParameter(),
+      value: 0
     });
 
     watch(() => props.value, showDialog => {
       if (!showDialog) return;
       localState.parameter = initParameter()
+      localState.value = 0;
     });
 
     function input (value: boolean): void {
@@ -82,22 +84,23 @@ export default defineComponent({
     function done (): void {
       if (localState.parameter.name === 'NO DATA') return;
       input(false);
+      localState.parameter.current += localState.value;
       ctx.emit('done', localState.parameter);
     }
 
     function add (value: number): void {
       if (localState.parameter.name === 'NO DATA') return;
-      localState.parameter.current += value;
+      localState.value += value;
     }
 
     function sub (value: number): void {
       if (localState.parameter.name === 'NO DATA') return;
-      localState.parameter.current -= value;
+      localState.value -= value;
     }
 
     function reset (): void {
       if (localState.parameter.name === 'NO DATA') return;
-      localState.parameter.current = localState.parameter.max;
+      localState.value = localState.parameter.max - localState.parameter.current;
     }
 
     return {
